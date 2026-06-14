@@ -384,6 +384,70 @@
     .about-card,.video-card,.link-card,.fanbox-accordion { background:#fff !important; }
 
     @media(max-width:540px){.nav-links{gap:16px;}.nav-links a{font-size:10px;}}
+
+    /* ══ ROYAL FRAME (shared by all three portraits) ══ */
+    .royal-frame-wrap {
+      position: relative;
+      display: inline-block;
+      /* breathing room so the SVG overlay isn't clipped */
+      padding: 28px;
+    }
+    /* the actual <img> */
+    .royal-frame-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+      position: relative;
+      z-index: 1;
+      border-radius: 2px;
+    }
+    /* SVG frame overlay – absolutely covers the padding area */
+    .royal-frame-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+      overflow: visible;
+    }
+
+    /* ── Hero portrait ── */
+    .hero-portrait {
+      margin: 36px auto 0;
+      max-width: min(480px, 90vw);
+    }
+    .hero-portrait img {
+      box-shadow: 0 8px 40px rgba(184,150,12,0.18);
+    }
+
+    /* ── About / Maid portrait ── */
+    .about-portrait {
+      margin: 0 auto 44px;
+      max-width: min(440px, 88vw);
+    }
+    .about-portrait img {
+      box-shadow: 0 8px 36px rgba(184,150,12,0.15);
+    }
+
+    /* ── Three-view section ── */
+    #threeview { background: var(--bg-sec-a); }
+    .threeview-portrait {
+      margin: 0 auto;
+      max-width: min(820px, 96vw);
+    }
+    .threeview-portrait img {
+      box-shadow: 0 10px 48px rgba(184,150,12,0.16);
+    }
+    .threeview-caption {
+      margin-top: 18px;
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(13px, 1.6vw, 16px);
+      color: var(--text-muted);
+      letter-spacing: 0.18em;
+    }
   </style>
 </head>
 <body>
@@ -482,6 +546,7 @@
   <a href="#hero" class="nav-logo">✦ &nbsp;Olivia Royal Chronicle&nbsp; ✦</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
+    <li><a href="#threeview">Design</a></li>
     <li><a href="#videos">Works</a></li>
     <li><a href="#fanbox">Fanbox</a></li>
     <li><a href="#links">Links</a></li>
@@ -525,6 +590,104 @@
       <div class="hero-ornament-line"></div>
     </div>
     <p class="hero-catchcopy reveal">『 姫と外の世界を見に行かない…？ 』</p>
+
+    <!-- olivia_main: framed portrait below catchcopy -->
+    <div class="hero-portrait reveal" style="transition-delay:.18s;">
+      <div class="royal-frame-wrap">
+        <img src="olivia_main.png" alt="エイル・オリビア メインビジュアル" />
+        <!-- British ornate frame SVG overlay -->
+        <svg class="royal-frame-svg" viewBox="0 0 400 520" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="fgMain" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"   stop-color="#f5e090"/>
+              <stop offset="35%"  stop-color="#d4af37"/>
+              <stop offset="65%"  stop-color="#c8a010"/>
+              <stop offset="100%" stop-color="#f0d870"/>
+            </linearGradient>
+            <filter id="fglow"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <!-- outer rect border -->
+          <rect x="4" y="4" width="392" height="512" rx="4" ry="4"
+                fill="none" stroke="url(#fgMain)" stroke-width="2.5" filter="url(#fglow)"/>
+          <!-- inner rect -->
+          <rect x="14" y="14" width="372" height="492" rx="2" ry="2"
+                fill="none" stroke="url(#fgMain)" stroke-width="1" opacity=".55"/>
+          <!-- fine inner line -->
+          <rect x="20" y="20" width="360" height="480" rx="1" ry="1"
+                fill="none" stroke="#e8cc60" stroke-width=".5" opacity=".35"/>
+
+          <!-- ── CORNER ORNAMENTS (all four) ── -->
+          <!-- top-left -->
+          <g transform="translate(4,4)" filter="url(#fglow)">
+            <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMain)" stroke-width="2.5"/>
+            <circle cx="0"  cy="0"  r="5"   fill="url(#fgMain)"/>
+            <circle cx="32" cy="0"  r="3.5" fill="url(#fgMain)"/>
+            <circle cx="0"  cy="32" r="3.5" fill="url(#fgMain)"/>
+            <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
+            <path d="M18 6 Q22 4 26 2" fill="none" stroke="#f0dc80" stroke-width=".8" opacity=".5"/>
+            <path d="M6 18 Q4 22 2 26" fill="none" stroke="#f0dc80" stroke-width=".8" opacity=".5"/>
+            <!-- fleur flourish -->
+            <path d="M0 0 Q8 8 0 16 Q-4 8 0 0Z" transform="translate(2,2) rotate(45)" fill="url(#fgMain)" opacity=".6" transform-origin="0 0"/>
+          </g>
+          <!-- top-right -->
+          <g transform="translate(396,4) scale(-1,1)" filter="url(#fglow)">
+            <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMain)" stroke-width="2.5"/>
+            <circle cx="0"  cy="0"  r="5"   fill="url(#fgMain)"/>
+            <circle cx="32" cy="0"  r="3.5" fill="url(#fgMain)"/>
+            <circle cx="0"  cy="32" r="3.5" fill="url(#fgMain)"/>
+            <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
+          </g>
+          <!-- bottom-left -->
+          <g transform="translate(4,516) scale(1,-1)" filter="url(#fglow)">
+            <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMain)" stroke-width="2.5"/>
+            <circle cx="0"  cy="0"  r="5"   fill="url(#fgMain)"/>
+            <circle cx="32" cy="0"  r="3.5" fill="url(#fgMain)"/>
+            <circle cx="0"  cy="32" r="3.5" fill="url(#fgMain)"/>
+            <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
+          </g>
+          <!-- bottom-right -->
+          <g transform="translate(396,516) scale(-1,-1)" filter="url(#fglow)">
+            <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMain)" stroke-width="2.5"/>
+            <circle cx="0"  cy="0"  r="5"   fill="url(#fgMain)"/>
+            <circle cx="32" cy="0"  r="3.5" fill="url(#fgMain)"/>
+            <circle cx="0"  cy="32" r="3.5" fill="url(#fgMain)"/>
+            <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
+          </g>
+
+          <!-- ── MID-EDGE ORNAMENTS ── -->
+          <!-- top centre -->
+          <g transform="translate(200,4)" filter="url(#fglow)">
+            <circle cx="0" cy="0" r="5" fill="url(#fgMain)"/>
+            <path d="M-22 0 Q-12 -10 0 0 Q12 -10 22 0" fill="none" stroke="url(#fgMain)" stroke-width="1.5"/>
+            <path d="M-10 0 Q-5 -5 0 -2 Q5 -5 10 0" fill="none" stroke="#f0dc80" stroke-width=".8" opacity=".6"/>
+            <!-- tiny crown cap -->
+            <path d="M-6 -6 L-4 -11 L0 -7 L4 -11 L6 -6 Z" fill="url(#fgMain)" opacity=".85"/>
+          </g>
+          <!-- bottom centre -->
+          <g transform="translate(200,516) scale(1,-1)" filter="url(#fglow)">
+            <circle cx="0" cy="0" r="5" fill="url(#fgMain)"/>
+            <path d="M-22 0 Q-12 -10 0 0 Q12 -10 22 0" fill="none" stroke="url(#fgMain)" stroke-width="1.5"/>
+            <path d="M-6 -6 L-4 -11 L0 -7 L4 -11 L6 -6 Z" fill="url(#fgMain)" opacity=".85"/>
+          </g>
+          <!-- left centre -->
+          <g transform="translate(4,260)" filter="url(#fglow)">
+            <circle cx="0" cy="0" r="4.5" fill="url(#fgMain)"/>
+            <path d="M0 -20 Q-10 -10 0 0 Q-10 10 0 20" fill="none" stroke="url(#fgMain)" stroke-width="1.4"/>
+          </g>
+          <!-- right centre -->
+          <g transform="translate(396,260)" filter="url(#fglow)">
+            <circle cx="0" cy="0" r="4.5" fill="url(#fgMain)"/>
+            <path d="M0 -20 Q10 -10 0 0 Q10 10 0 20" fill="none" stroke="url(#fgMain)" stroke-width="1.4"/>
+          </g>
+
+          <!-- ── SIDE CABLE / ROPE LINES ── -->
+          <path d="M4 56 L4 464" stroke="url(#fgMain)" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
+          <path d="M396 56 L396 464" stroke="url(#fgMain)" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
+          <path d="M56 4 L344 4" stroke="url(#fgMain)" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
+          <path d="M56 516 L344 516" stroke="url(#fgMain)" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
+        </svg>
+      </div>
+    </div>
   </div>
   <div class="scroll-hint"><span>Scroll</span><div class="scroll-hint-arrow"></div></div>
 </section>
@@ -536,6 +699,84 @@
     <p class="section-eyebrow reveal">✦ &nbsp; Royal Profile</p>
     <h2 class="section-title reveal">About the Princess</h2>
     <div class="section-rule reveal"></div>
+
+    <!-- olivia_maid: framed portrait below heading, above grid -->
+    <div class="about-portrait reveal" style="transition-delay:.06s;">
+      <div class="royal-frame-wrap">
+        <img src="olivia_maid.jpg" alt="エイル・オリビア メイドビジュアル" />
+        <svg class="royal-frame-svg" viewBox="0 0 400 480" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="fgMaid" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"   stop-color="#f5e090"/>
+              <stop offset="35%"  stop-color="#d4af37"/>
+              <stop offset="65%"  stop-color="#c8a010"/>
+              <stop offset="100%" stop-color="#f0d870"/>
+            </linearGradient>
+            <filter id="fglowM"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <rect x="4"  y="4"  width="392" height="472" rx="4" fill="none" stroke="url(#fgMaid)" stroke-width="2.5" filter="url(#fglowM)"/>
+          <rect x="14" y="14" width="372" height="452" rx="2" fill="none" stroke="url(#fgMaid)" stroke-width="1"   opacity=".55"/>
+          <rect x="20" y="20" width="360" height="440" rx="1" fill="none" stroke="#e8cc60"      stroke-width=".5"  opacity=".35"/>
+          <!-- corner top-left -->
+          <g transform="translate(4,4)" filter="url(#fglowM)">
+            <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMaid)" stroke-width="2.5"/>
+            <circle cx="0" cy="0"  r="5"   fill="url(#fgMaid)"/>
+            <circle cx="32" cy="0" r="3.5" fill="url(#fgMaid)"/>
+            <circle cx="0" cy="32" r="3.5" fill="url(#fgMaid)"/>
+            <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
+            <path d="M-4 -4 L-2 -10 L2 -6 L6 -10 L8 -4 Z" transform="translate(2,2) rotate(45)" fill="url(#fgMaid)" opacity=".7"/>
+          </g>
+          <!-- corner top-right -->
+          <g transform="translate(396,4) scale(-1,1)" filter="url(#fglowM)">
+            <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMaid)" stroke-width="2.5"/>
+            <circle cx="0" cy="0"  r="5"   fill="url(#fgMaid)"/>
+            <circle cx="32" cy="0" r="3.5" fill="url(#fgMaid)"/>
+            <circle cx="0" cy="32" r="3.5" fill="url(#fgMaid)"/>
+            <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
+          </g>
+          <!-- corner bottom-left -->
+          <g transform="translate(4,476) scale(1,-1)" filter="url(#fglowM)">
+            <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMaid)" stroke-width="2.5"/>
+            <circle cx="0" cy="0"  r="5"   fill="url(#fgMaid)"/>
+            <circle cx="32" cy="0" r="3.5" fill="url(#fgMaid)"/>
+            <circle cx="0" cy="32" r="3.5" fill="url(#fgMaid)"/>
+            <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
+          </g>
+          <!-- corner bottom-right -->
+          <g transform="translate(396,476) scale(-1,-1)" filter="url(#fglowM)">
+            <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMaid)" stroke-width="2.5"/>
+            <circle cx="0" cy="0"  r="5"   fill="url(#fgMaid)"/>
+            <circle cx="32" cy="0" r="3.5" fill="url(#fgMaid)"/>
+            <circle cx="0" cy="32" r="3.5" fill="url(#fgMaid)"/>
+            <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
+          </g>
+          <!-- mid-edge ornaments -->
+          <g transform="translate(200,4)" filter="url(#fglowM)">
+            <circle cx="0" cy="0" r="5" fill="url(#fgMaid)"/>
+            <path d="M-22 0 Q-12 -10 0 0 Q12 -10 22 0" fill="none" stroke="url(#fgMaid)" stroke-width="1.5"/>
+            <path d="M-6 -6 L-4 -11 L0 -7 L4 -11 L6 -6 Z" fill="url(#fgMaid)" opacity=".85"/>
+          </g>
+          <g transform="translate(200,476) scale(1,-1)" filter="url(#fglowM)">
+            <circle cx="0" cy="0" r="5" fill="url(#fgMaid)"/>
+            <path d="M-22 0 Q-12 -10 0 0 Q12 -10 22 0" fill="none" stroke="url(#fgMaid)" stroke-width="1.5"/>
+            <path d="M-6 -6 L-4 -11 L0 -7 L4 -11 L6 -6 Z" fill="url(#fgMaid)" opacity=".85"/>
+          </g>
+          <g transform="translate(4,240)" filter="url(#fglowM)">
+            <circle cx="0" cy="0" r="4.5" fill="url(#fgMaid)"/>
+            <path d="M0 -20 Q-10 -10 0 0 Q-10 10 0 20" fill="none" stroke="url(#fgMaid)" stroke-width="1.4"/>
+          </g>
+          <g transform="translate(396,240)" filter="url(#fglowM)">
+            <circle cx="0" cy="0" r="4.5" fill="url(#fgMaid)"/>
+            <path d="M0 -20 Q10 -10 0 0 Q10 10 0 20" fill="none" stroke="url(#fgMaid)" stroke-width="1.4"/>
+          </g>
+          <!-- dashed rail lines -->
+          <path d="M4 56 L4 420"   stroke="url(#fgMaid)" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
+          <path d="M396 56 L396 420" stroke="url(#fgMaid)" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
+          <path d="M56 4 L344 4"   stroke="url(#fgMaid)" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
+          <path d="M56 476 L344 476" stroke="url(#fgMaid)" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
+        </svg>
+      </div>
+    </div>
 
     <div class="about-grid">
       <div class="about-card reveal">
@@ -577,8 +818,8 @@
 
     <!-- SD accent: wink + kirameye, floats below profile cards -->
     <div class="about-sd-row reveal" style="transition-delay:.22s;">
-      <img class="sd-char" src="olivia.sd.png"       alt="エイル・オリビア SDキャラ（ウィンク）" />
-      <img class="sd-char" src="olivia.sdkirame.png" alt="エイル・オリビア SDキャラ（キラ目）" style="animation-delay:.65s;" />
+      <img class="sd-char" src="olivia_sd.png"       alt="エイル・オリビア SDキャラ（ウィンク）" />
+      <img class="sd-char" src="olivia_sdkirame.png" alt="エイル・オリビア SDキャラ（キラ目）" style="animation-delay:.65s;" />
     </div>
 
     <div class="about-message reveal" style="transition-delay:.1s;">
@@ -592,13 +833,157 @@
   </div>
 </section>
 
+<!-- ═══ THREE-VIEW ═══ -->
+<section id="threeview">
+  <div class="royal-divider">✦ &nbsp; ✦ &nbsp; ✦</div>
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">✦ &nbsp; Character Design</p>
+    <h2 class="section-title reveal">三面図 &amp; キャラクターデザイン</h2>
+    <div class="section-rule reveal"></div>
+
+    <div class="threeview-portrait reveal" style="transition-delay:.08s;">
+      <div class="royal-frame-wrap">
+        <img src="olivia_threedemention.jpg" alt="エイル・オリビア キャラクター三面図" />
+        <!-- wide-format ornate frame -->
+        <svg class="royal-frame-svg" viewBox="0 0 800 440" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="fg3v" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"   stop-color="#f5e090"/>
+              <stop offset="35%"  stop-color="#d4af37"/>
+              <stop offset="65%"  stop-color="#c8a010"/>
+              <stop offset="100%" stop-color="#f0d870"/>
+            </linearGradient>
+            <filter id="fglow3"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <!-- triple border system -->
+          <rect x="4"  y="4"  width="792" height="432" rx="4" fill="none" stroke="url(#fg3v)" stroke-width="3"   filter="url(#fglow3)"/>
+          <rect x="13" y="13" width="774" height="414" rx="2" fill="none" stroke="url(#fg3v)" stroke-width="1.2" opacity=".6"/>
+          <rect x="20" y="20" width="760" height="400" rx="1" fill="none" stroke="#e8cc60"    stroke-width=".6"  opacity=".35"/>
+
+          <!-- ── CORNER ORNAMENTS ── -->
+          <!-- top-left -->
+          <g transform="translate(4,4)" filter="url(#fglow3)">
+            <path d="M0 38 Q0 0 38 0" fill="none" stroke="url(#fg3v)" stroke-width="3"/>
+            <circle cx="0"  cy="0"  r="6"   fill="url(#fg3v)"/>
+            <circle cx="38" cy="0"  r="4"   fill="url(#fg3v)"/>
+            <circle cx="0"  cy="38" r="4"   fill="url(#fg3v)"/>
+            <!-- inner filigree -->
+            <path d="M8 24 Q20 8 24 8"  fill="none" stroke="#f0dc80" stroke-width="1.2" opacity=".7"/>
+            <path d="M24 8 Q32 4 38 2"  fill="none" stroke="#f0dc80" stroke-width=".9"  opacity=".5"/>
+            <path d="M8 24 Q4 32 2 38"  fill="none" stroke="#f0dc80" stroke-width=".9"  opacity=".5"/>
+            <!-- rosette -->
+            <circle cx="12" cy="12" r="4"   fill="url(#fg3v)" opacity=".5"/>
+            <circle cx="12" cy="12" r="1.8" fill="#fff8d0"    opacity=".8"/>
+            <!-- mini crown -->
+            <path d="M-7 -7 L-5 -13 L0 -9 L5 -13 L7 -7 Z" transform="translate(2,2) rotate(45)" fill="url(#fg3v)" opacity=".8"/>
+          </g>
+          <!-- top-right -->
+          <g transform="translate(796,4) scale(-1,1)" filter="url(#fglow3)">
+            <path d="M0 38 Q0 0 38 0" fill="none" stroke="url(#fg3v)" stroke-width="3"/>
+            <circle cx="0"  cy="0"  r="6"   fill="url(#fg3v)"/>
+            <circle cx="38" cy="0"  r="4"   fill="url(#fg3v)"/>
+            <circle cx="0"  cy="38" r="4"   fill="url(#fg3v)"/>
+            <path d="M8 24 Q20 8 24 8"  fill="none" stroke="#f0dc80" stroke-width="1.2" opacity=".7"/>
+            <circle cx="12" cy="12" r="4"   fill="url(#fg3v)" opacity=".5"/>
+            <circle cx="12" cy="12" r="1.8" fill="#fff8d0"    opacity=".8"/>
+          </g>
+          <!-- bottom-left -->
+          <g transform="translate(4,436) scale(1,-1)" filter="url(#fglow3)">
+            <path d="M0 38 Q0 0 38 0" fill="none" stroke="url(#fg3v)" stroke-width="3"/>
+            <circle cx="0"  cy="0"  r="6"   fill="url(#fg3v)"/>
+            <circle cx="38" cy="0"  r="4"   fill="url(#fg3v)"/>
+            <circle cx="0"  cy="38" r="4"   fill="url(#fg3v)"/>
+            <path d="M8 24 Q20 8 24 8"  fill="none" stroke="#f0dc80" stroke-width="1.2" opacity=".7"/>
+            <circle cx="12" cy="12" r="4"   fill="url(#fg3v)" opacity=".5"/>
+            <circle cx="12" cy="12" r="1.8" fill="#fff8d0"    opacity=".8"/>
+          </g>
+          <!-- bottom-right -->
+          <g transform="translate(796,436) scale(-1,-1)" filter="url(#fglow3)">
+            <path d="M0 38 Q0 0 38 0" fill="none" stroke="url(#fg3v)" stroke-width="3"/>
+            <circle cx="0"  cy="0"  r="6"   fill="url(#fg3v)"/>
+            <circle cx="38" cy="0"  r="4"   fill="url(#fg3v)"/>
+            <circle cx="0"  cy="38" r="4"   fill="url(#fg3v)"/>
+            <path d="M8 24 Q20 8 24 8"  fill="none" stroke="#f0dc80" stroke-width="1.2" opacity=".7"/>
+            <circle cx="12" cy="12" r="4"   fill="url(#fg3v)" opacity=".5"/>
+            <circle cx="12" cy="12" r="1.8" fill="#fff8d0"    opacity=".8"/>
+          </g>
+
+          <!-- ── MID-EDGE ORNAMENTS (top / bottom / sides) ── -->
+          <!-- top centre -->
+          <g transform="translate(400,4)" filter="url(#fglow3)">
+            <circle cx="0" cy="0" r="6"   fill="url(#fg3v)"/>
+            <path d="M-32 0 Q-18 -14 0 0 Q18 -14 32 0" fill="none" stroke="url(#fg3v)" stroke-width="2"/>
+            <path d="M-14 0 Q-7 -7 0 -3 Q7 -7 14 0" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".6"/>
+            <path d="M-8 -8 L-5 -15 L0 -10 L5 -15 L8 -8 Z" fill="url(#fg3v)" opacity=".9"/>
+            <circle cx="0" cy="-10" r="2.5" fill="#f8f0c0"/>
+          </g>
+          <!-- bottom centre -->
+          <g transform="translate(400,436) scale(1,-1)" filter="url(#fglow3)">
+            <circle cx="0" cy="0" r="6"   fill="url(#fg3v)"/>
+            <path d="M-32 0 Q-18 -14 0 0 Q18 -14 32 0" fill="none" stroke="url(#fg3v)" stroke-width="2"/>
+            <path d="M-8 -8 L-5 -15 L0 -10 L5 -15 L8 -8 Z" fill="url(#fg3v)" opacity=".9"/>
+          </g>
+          <!-- left 1/3 mark -->
+          <g transform="translate(4,148)" filter="url(#fglow3)">
+            <circle cx="0" cy="0" r="5" fill="url(#fg3v)"/>
+            <path d="M0 -24 Q-12 -12 0 0 Q-12 12 0 24" fill="none" stroke="url(#fg3v)" stroke-width="1.6"/>
+          </g>
+          <!-- left 2/3 mark -->
+          <g transform="translate(4,292)" filter="url(#fglow3)">
+            <circle cx="0" cy="0" r="5" fill="url(#fg3v)"/>
+            <path d="M0 -24 Q-12 -12 0 0 Q-12 12 0 24" fill="none" stroke="url(#fg3v)" stroke-width="1.6"/>
+          </g>
+          <!-- right 1/3 mark -->
+          <g transform="translate(796,148)" filter="url(#fglow3)">
+            <circle cx="0" cy="0" r="5" fill="url(#fg3v)"/>
+            <path d="M0 -24 Q12 -12 0 0 Q12 12 0 24" fill="none" stroke="url(#fg3v)" stroke-width="1.6"/>
+          </g>
+          <!-- right 2/3 mark -->
+          <g transform="translate(796,292)" filter="url(#fglow3)">
+            <circle cx="0" cy="0" r="5" fill="url(#fg3v)"/>
+            <path d="M0 -24 Q12 -12 0 0 Q12 12 0 24" fill="none" stroke="url(#fg3v)" stroke-width="1.6"/>
+          </g>
+          <!-- top 1/3 & 2/3 -->
+          <g transform="translate(267,4)" filter="url(#fglow3)">
+            <circle cx="0" cy="0" r="4" fill="url(#fg3v)"/>
+            <path d="M-16 0 Q-8 -8 0 0 Q8 -8 16 0" fill="none" stroke="url(#fg3v)" stroke-width="1.4"/>
+          </g>
+          <g transform="translate(533,4)" filter="url(#fglow3)">
+            <circle cx="0" cy="0" r="4" fill="url(#fg3v)"/>
+            <path d="M-16 0 Q-8 -8 0 0 Q8 -8 16 0" fill="none" stroke="url(#fg3v)" stroke-width="1.4"/>
+          </g>
+          <!-- bottom 1/3 & 2/3 -->
+          <g transform="translate(267,436) scale(1,-1)" filter="url(#fglow3)">
+            <circle cx="0" cy="0" r="4" fill="url(#fg3v)"/>
+            <path d="M-16 0 Q-8 -8 0 0 Q8 -8 16 0" fill="none" stroke="url(#fg3v)" stroke-width="1.4"/>
+          </g>
+          <g transform="translate(533,436) scale(1,-1)" filter="url(#fglow3)">
+            <circle cx="0" cy="0" r="4" fill="url(#fg3v)"/>
+            <path d="M-16 0 Q-8 -8 0 0 Q8 -8 16 0" fill="none" stroke="url(#fg3v)" stroke-width="1.4"/>
+          </g>
+
+          <!-- ── DASHED RAIL LINES ── -->
+          <path d="M4 66 L4 370"    stroke="url(#fg3v)" stroke-width="1" stroke-dasharray="4 6" opacity=".35"/>
+          <path d="M796 66 L796 370" stroke="url(#fg3v)" stroke-width="1" stroke-dasharray="4 6" opacity=".35"/>
+          <path d="M66 4 L730 4"    stroke="url(#fg3v)" stroke-width="1" stroke-dasharray="4 6" opacity=".35"/>
+          <path d="M66 436 L730 436" stroke="url(#fg3v)" stroke-width="1" stroke-dasharray="4 6" opacity=".35"/>
+        </svg>
+      </div>
+      <p class="threeview-caption reveal" style="transition-delay:.18s;">
+        ✦ &nbsp; Character Design &amp; Three-View Sheet &nbsp; ✦
+      </p>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ VIDEOS ═══ -->
 <section id="videos">
   <div class="royal-divider">✦ &nbsp; ✦ &nbsp; ✦</div>
   <div class="section-inner">
     <!-- SD pair floated top-right above section header -->
     <div class="videos-sd-row reveal">
-      <img class="sd-char" src="olivia.sd.png"       alt="エイル・オリビア SDキャラ" style="animation-delay:.3s;" />
+      <img class="sd-char" src="olivia_sdkirame.png" alt="エイル・オリビア キラ目SD" style="animation-delay:.3s;" />
+      <img class="sd-char" src="olivia_sd.png"       alt="エイル・オリビア SDキャラ" style="animation-delay:.9s;" />
     </div>
 
     <p class="section-eyebrow reveal">✦ &nbsp; Royal Stage</p>
@@ -665,7 +1050,7 @@
 
           <!-- FANBOXガイドライン画像 (パス指定) -->
           <div class="fanbox-img-wrap">
-            <img src="olivia.fanboxguideline.png"
+            <img src="olivia_fanboxguideline.png"
                  alt="エイル・オリビア FANBOXプランガイドライン"
                  loading="lazy" />
           </div>
