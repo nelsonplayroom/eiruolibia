@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Olivia Royal Chronicle ✦ エイル・オリビア</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* ── White-based luxury palette ── */
+      --bg-page:       #faf8f5;      /* warm ivory white */
+      --bg-section-a:  #ffffff;
+      --bg-section-b:  #f5f0ea;      /* champagne section */
+      --bg-hero:       #fefcf8;
+
+      --gold:          #b8960c;      /* deep antique gold */
+      --gold-bright:   #d4af37;
+      --gold-pale:     #e8d080;
+      --gold-ultra:    #f5e9b0;
+      --rose:          #b06060;
+      --rose-light:    #d4948e;
+      --rose-pale:     #f0dada;
+
+      --text-dark:     #1a1208;      /* near-black warm */
+      --text-mid:      #3d2e14;
+      --text-soft:     #7a6540;
+      --text-muted:    #a89070;
+
+      --border-gold:   rgba(184,150,12,0.25);
+      --border-dark:   rgba(26,18,8,0.08);
+
+      --glass-bg:      rgba(255,255,255,0.70);
+      --glass-border:  rgba(184,150,12,0.30);
+
+      --shadow-card:   0 4px 32px rgba(184,150,12,0.10), 0 1px 4px rgba(26,18,8,0.06);
+      --shadow-hover:  0 12px 48px rgba(184,150,12,0.22), 0 2px 8px rgba(26,18,8,0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans JP', 'EB Garamond', serif;
+      background: var(--bg-page);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ══════════════════════════════════════
+       LOADING SCREEN
+    ══════════════════════════════════════ */
+    #loading {
+      position: fixed; inset: 0; z-index: 9999;
+      background: radial-gradient(ellipse 90% 90% at 50% 46%, #fffff8 0%, #fdf8ee 40%, #f5edda 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+    #loading.hidden { opacity: 0; visibility: hidden; }
+
+    /* ── Crown emblem ── */
+    .loading-crown-wrap {
+      position: relative;
+      width: 220px; height: 220px;
+    }
+
+    /* ── Crown SVG centred ── */
+    .loading-crown-svg {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 108px; height: 108px;
+      animation: crownBreath 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 14px rgba(184,150,12,0.55))
+              drop-shadow(0 0 40px rgba(212,175,55,0.25));
+    }
+    @keyframes crownBreath {
+      0%,100% { transform: translate(-50%,-50%) scale(1);    filter: drop-shadow(0 0 14px rgba(184,150,12,0.55)) drop-shadow(0 0 40px rgba(212,175,55,0.25)); }
+      50%      { transform: translate(-50%,-50%) scale(1.05); filter: drop-shadow(0 0 24px rgba(184,150,12,0.80)) drop-shadow(0 0 60px rgba(212,175,55,0.40)); }
+    }
+
+    /* ── Orbit ring ── */
+    .orbit-ring {
+      position: absolute; inset: 0;
+      animation: spinOrbit 4s linear infinite;
+    }
+    @keyframes spinOrbit { to { transform: rotate(360deg); } }
+
+    .orbit-star {
+      position: absolute; top: 50%; left: 50%;
+      width: 0; height: 0;
+    }
+    .orbit-star::before {
+      content: '✦';
+      position: absolute;
+      transform: translate(-50%, -50%);
+      color: var(--gold-bright);
+      animation: twinkle 2s ease-in-out infinite;
+      filter: drop-shadow(0 0 4px rgba(184,150,12,0.8));
+    }
+    /* vary sizes / colours per star */
+    .orbit-star:nth-child(1)::before { font-size:13px; animation-delay:0.0s; }
+    .orbit-star:nth-child(2)::before { font-size:8px;  animation-delay:0.25s; color:var(--rose-light); }
+    .orbit-star:nth-child(3)::before { font-size:15px; animation-delay:0.5s; }
+    .orbit-star:nth-child(4)::before { font-size:8px;  animation-delay:0.75s; color:#c8b060; }
+    .orbit-star:nth-child(5)::before { font-size:13px; animation-delay:1.0s; }
+    .orbit-star:nth-child(6)::before { font-size:9px;  animation-delay:1.25s; color:var(--rose-light); }
+    .orbit-star:nth-child(7)::before { font-size:11px; animation-delay:1.5s; }
+    .orbit-star:nth-child(8)::before { font-size:8px;  animation-delay:1.75s; color:#c8b060; }
+
+    @keyframes twinkle {
+      0%,100% { opacity:1;   transform:translate(-50%,-50%) scale(1); }
+      50%      { opacity:0.3; transform:translate(-50%,-50%) scale(0.5); }
+    }
+
+    /* ── outer shimmer ring ── */
+    .orbit-ring-outer {
+      position: absolute; inset: -6px;
+      border-radius: 50%;
+      border: 1px solid rgba(184,150,12,0.18);
+      animation: ringGlow 3s ease-in-out infinite;
+    }
+    @keyframes ringGlow {
+      0%,100% { opacity:0.4; box-shadow:0 0 0 0 rgba(184,150,12,0); }
+      50%      { opacity:1;   box-shadow:0 0 20px 4px rgba(184,150,12,0.15); }
+    }
+
+    .loading-title {
+      margin-top: 20px;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(13px, 3vw, 19px);
+      color: var(--gold);
+      letter-spacing: 0.28em;
+      animation: titleFade 2s ease-in-out infinite;
+    }
+    @keyframes titleFade { 0%,100%{opacity:0.65;} 50%{opacity:1;} }
+
+    .loading-sub {
+      margin-top: 8px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 0.2em;
+    }
+
+    /* ══════════════════════════════════════
+       BACKGROUND SPARKLES (light version)
+    ══════════════════════════════════════ */
+    .bg-sparkles {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .sparkle {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--gold-bright);
+      opacity: 0;
+      animation: sparkleDrift var(--dur,5s) var(--delay,0s) ease-in-out infinite;
+    }
+    @keyframes sparkleDrift {
+      0%   { opacity:0; transform:translateY(0) scale(0); }
+      25%  { opacity:0.55; transform:translateY(-20px) scale(1); }
+      75%  { opacity:0.25; }
+      100% { opacity:0; transform:translateY(-60px) scale(0); }
+    }
+
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 66px;
+      background: rgba(250,248,245,0.88);
+      backdrop-filter: blur(20px) saturate(1.6);
+      border-bottom: 1px solid var(--border-gold);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(16px, 5vw, 64px);
+    }
+    .nav-logo {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(10px, 1.8vw, 14px);
+      color: var(--gold);
+      letter-spacing: 0.22em;
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+    .nav-logo:hover { opacity: 0.7; }
+
+    .nav-links { list-style: none; display: flex; gap: clamp(20px, 3vw, 44px); }
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(10px, 1.3vw, 13px);
+      color: var(--text-soft);
+      text-decoration: none;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 1px; background: var(--gold);
+      transform: scaleX(0); transition: transform 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
+    #hero {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 90px clamp(20px,6vw,80px) 70px;
+      text-align: center;
+      background: var(--bg-hero);
+      overflow: hidden;
+    }
+
+    /* delicate watermark pattern */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        radial-gradient(ellipse 70% 60% at 50% 38%, rgba(212,175,55,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 15% 85%, rgba(176,96,96,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 85% 15%, rgba(184,150,12,0.05) 0%, transparent 60%);
+    }
+    /* fine grid ornament */
+    #hero::after {
+      content: '';
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(184,150,12,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184,150,12,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    .hero-inner { position: relative; z-index: 1; }
+
+    .hero-emblem {
+      width: 64px; height: 64px;
+      margin: 0 auto 20px;
+      opacity: 0.75;
+      animation: floatEmblem 5s ease-in-out infinite;
+      filter: drop-shadow(0 2px 12px rgba(184,150,12,0.3));
+    }
+    @keyframes floatEmblem {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+
+    .hero-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(12px, 1.8vw, 16px);
+      color: var(--text-muted);
+      letter-spacing: 0.38em;
+      margin-bottom: 18px;
+    }
+    .hero-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(30px, 7.5vw, 78px);
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      /* subtle gold shimmer */
+      background: linear-gradient(135deg, #1a1208 0%, #5c430a 35%, #b8960c 55%, #7a5c0a 75%, #1a1208 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(13px, 2.2vw, 22px);
+      color: var(--text-soft);
+      letter-spacing: 0.35em;
+      margin-bottom: 36px;
+    }
+
+    /* thin ornament lines flanking divider */
+    .hero-ornament {
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+      margin: 0 auto 34px;
+    }
+    .hero-ornament-line {
+      flex: 1; max-width: 120px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-bright), transparent);
+    }
+    .hero-ornament-diamond {
+      font-size: 12px; color: var(--gold); letter-spacing: 6px;
+    }
+
+    .hero-catchcopy {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: clamp(18px, 3.2vw, 30px);
+      color: var(--text-mid);
+      letter-spacing: 0.08em;
+      line-height: 1.7;
+      display: inline-block;
+      position: relative;
+      padding: 14px 36px;
+    }
+    .hero-catchcopy::before,
+    .hero-catchcopy::after {
+      content: '';
+      position: absolute;
+      width: 28px; height: 28px;
+    }
+    .hero-catchcopy::before { top:0; left:0; border-top:1.5px solid var(--gold); border-left:1.5px solid var(--gold); }
+    .hero-catchcopy::after  { bottom:0; right:0; border-bottom:1.5px solid var(--gold); border-right:1.5px solid var(--gold); }
+
+    .scroll-hint {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: var(--text-muted);
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: 0.3em;
+      text-transform: uppercase;
+      animation: hintBounce 2.4s ease-in-out infinite;
+    }
+    .scroll-hint-arrow {
+      width: 1px; height: 28px;
+      background: linear-gradient(180deg, var(--gold-bright), transparent);
+    }
+    @keyframes hintBounce {
+      0%,100% { transform: translateX(-50%) translateY(0); opacity:0.6; }
+      50%      { transform: translateX(-50%) translateY(5px); opacity:1; }
+    }
+
+    /* ══════════════════════════════════════
+       COMMON SECTION STYLES
+    ══════════════════════════════════════ */
+    section { position: relative; z-index: 1; }
+    .section-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: clamp(64px,10vw,110px) clamp(20px,6vw,48px);
+    }
+
+    .section-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      color: var(--gold);
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(18px, 3.5vw, 34px);
+      color: var(--text-dark);
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+    .section-rule {
+      width: 56px; height: 1.5px;
+      background: linear-gradient(90deg, var(--gold), var(--rose-light));
+      margin-bottom: 48px;
+    }
+
+    /* reveal */
+    .reveal {
+      opacity: 0; transform: translateY(36px);
+      transition: opacity 0.85s cubic-bezier(.22,.68,0,1.2), transform 0.85s cubic-bezier(.22,.68,0,1.2);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* royal divider between sections */
+    .royal-divider {
+      text-align: center;
+      color: var(--gold-pale);
+      font-size: 12px; letter-spacing: 14px;
+      padding: 2px 0;
+      line-height: 1;
+    }
+
+    /* ══════════════════════════════════════
+       ABOUT SECTION
+    ══════════════════════════════════════ */
+    #about { background: var(--bg-section-a); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 580px) { .about-grid { grid-template-columns: 1fr; } }
+
+    .about-card {
+      background: #fff;
+      border: 1px solid var(--border-gold);
+      border-radius: 14px;
+      padding: 22px 24px;
+      display: flex; align-items: flex-start; gap: 16px;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .about-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(184,150,12,0.50);
+    }
+    .about-card-icon {
+      font-size: 28px; flex-shrink: 0; line-height: 1;
+    }
+    .about-card-label {
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px; letter-spacing: 0.32em;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .about-card-value {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(15px,1.8vw,18px);
+      color: var(--text-dark); line-height: 1.55;
+    }
+    .about-card-value span { font-size:13px; color:var(--text-muted); }
+
+    /* message block */
+    .about-message {
+      margin-top: 54px;
+      text-align: center;
+    }
+    .about-message-deco {
+      font-size: 13px; color: var(--gold);
+      letter-spacing: 10px; margin-bottom: 20px;
+    }
+    .about-message-text {
+      display: inline-block;
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: clamp(16px,2.6vw,22px);
+      color: var(--text-mid);
+      line-height: 1.9;
+      max-width: 640px;
+      position: relative;
+      padding: 28px 48px;
+    }
+    .about-message-text::before,
+    .about-message-text::after {
+      content: ''; position: absolute; width: 50px; height: 50px;
+    }
+    .about-message-text::before { top:0; left:0; border-top:1.5px solid var(--gold); border-left:1.5px solid var(--gold); }
+    .about-message-text::after  { bottom:0; right:0; border-bottom:1.5px solid var(--gold); border-right:1.5px solid var(--gold); }
+
+    /* ══════════════════════════════════════
+       VIDEOS SECTION
+    ══════════════════════════════════════ */
+    #videos { background: var(--bg-section-b); }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+      gap: 22px;
+    }
+    .video-card {
+      background: #fff;
+      border: 1px solid var(--border-gold);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .video-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: var(--shadow-hover);
+    }
+    .video-label {
+      padding: 11px 16px 0;
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px; letter-spacing: 0.26em;
+      color: var(--gold); text-transform: uppercase;
+    }
+    .video-caption {
+      padding: 6px 16px 13px;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 11.5px; color: var(--text-soft);
+      line-height: 1.55;
+    }
+    .video-frame-wrap { position:relative; padding-bottom:56.25%; height:0; }
+    .video-frame-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
+
+    /* ══════════════════════════════════════
+       LINKS SECTION
+    ══════════════════════════════════════ */
+    #links { background: var(--bg-section-a); }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(188px,1fr));
+      gap: 16px;
+    }
+    .link-card {
+      background: #fff;
+      border: 1px solid var(--border-gold);
+      border-radius: 14px;
+      padding: 22px 16px 20px;
+      text-decoration: none;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      box-shadow: var(--shadow-card);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    }
+    .link-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(184,150,12,0.5);
+      background: #fffef8;
+    }
+    .link-icon { font-size: 26px; line-height: 1; }
+    .link-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 10px; color: var(--gold); letter-spacing: 0.18em;
+    }
+    .link-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px; color: var(--text-muted); letter-spacing: 0.08em;
+    }
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    footer {
+      position: relative; z-index: 1;
+      background: var(--bg-section-b);
+      border-top: 1px solid var(--border-gold);
+      padding: 48px clamp(20px,6vw,64px);
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(12px,2vw,17px);
+      color: var(--gold); letter-spacing: 0.22em;
+      margin-bottom: 8px;
+    }
+    .footer-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13px; color: var(--text-muted);
+      letter-spacing: 0.2em; margin-bottom: 24px;
+    }
+    .footer-deco { color: var(--gold-pale); font-size: 11px; letter-spacing: 12px; margin-bottom: 16px; }
+    .footer-copy { font-size: 10.5px; color: var(--text-muted); letter-spacing: 0.1em; }
+
+    /* ══════════════════════════════════════
+       SD CHARACTER ACCENTS
+    ══════════════════════════════════════ */
+    .sd-accent-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: clamp(16px, 4vw, 48px);
+      margin: 44px 0 0;
+      pointer-events: none;
+      user-select: none;
+    }
+    .sd-accent-wrap.top-accent {
+      margin: 0 0 36px;
+    }
+    .sd-char {
+      width: clamp(90px, 14vw, 150px);
+      height: auto;
+      object-fit: contain;
+      /* knock out black background (PNG with black BG → mix-mode) */
+      mix-blend-mode: multiply;
+      filter: drop-shadow(0 4px 18px rgba(184,150,12,0.18));
+      animation: sdFloat 4s ease-in-out infinite;
+      transition: transform 0.3s ease;
+    }
+    .sd-char:nth-child(2) { animation-delay: 0.6s; }
+    @keyframes sdFloat {
+      0%,100% { transform: translateY(0) rotate(-1deg); }
+      50%      { transform: translateY(-10px) rotate(1deg); }
+    }
+    /* about section: chars sit at bottom of card area */
+    .about-sd-row {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: clamp(20px, 5vw, 60px);
+      margin-top: 40px;
+      padding-bottom: 4px;
+    }
+    .about-sd-row .sd-char {
+      width: clamp(80px, 11vw, 130px);
+    }
+    /* videos section: pair float above grid header */
+    .videos-sd-row {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      gap: 20px;
+      margin-bottom: -10px;
+    }
+    .videos-sd-row .sd-char {
+      width: clamp(70px, 9vw, 110px);
+    }
+
+    /* ══════════════════════════════════════
+       FANBOX ACCORDION SECTION
+    ══════════════════════════════════════ */
+    #fanbox { background: var(--bg-section-b); }
+
+    .fanbox-accordion {
+      border: 1px solid var(--border-gold);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      background: #fff;
+    }
+
+    .fanbox-trigger {
+      width: 100%;
+      background: linear-gradient(135deg, #fff8ee 0%, #fff 60%, #fff8ee 100%);
+      border: none;
+      cursor: pointer;
+      padding: 22px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: background 0.3s ease;
+    }
+    .fanbox-trigger:hover { background: linear-gradient(135deg, #fff3e0 0%, #fffdf8 60%, #fff3e0 100%); }
+
+    .fanbox-trigger-left {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .fanbox-trigger-icon {
+      font-size: 26px; line-height: 1;
+      filter: drop-shadow(0 1px 4px rgba(184,150,12,0.3));
+    }
+    .fanbox-trigger-text {}
+    .fanbox-trigger-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px; letter-spacing: 0.32em;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .fanbox-trigger-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(13px, 2vw, 18px);
+      color: var(--text-dark);
+      letter-spacing: 0.08em;
+    }
+
+    .fanbox-chevron {
+      width: 32px; height: 32px; flex-shrink: 0;
+      border: 1.5px solid var(--border-gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      font-size: 14px;
+      transition: transform 0.4s cubic-bezier(.22,.68,0,1.2), border-color 0.3s;
+    }
+    .fanbox-accordion.open .fanbox-chevron {
+      transform: rotate(180deg);
+      border-color: rgba(184,150,12,0.6);
+    }
+
+    /* drawer */
+    .fanbox-drawer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.55s cubic-bezier(.4,0,.2,1);
+    }
+    .fanbox-accordion.open .fanbox-drawer { max-height: 1200px; }
+
+    .fanbox-drawer-inner {
+      padding: 0 28px 28px;
+      border-top: 1px solid var(--border-gold);
+    }
+
+    /* image */
+    .fanbox-img-wrap {
+      margin-top: 24px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-gold);
+      box-shadow: var(--shadow-card);
+    }
+    .fanbox-img-wrap img {
+      width: 100%; height: auto;
+      display: block;
+    }
+
+    /* dialog / description card */
+    .fanbox-dialog {
+      margin-top: 20px;
+      background: linear-gradient(135deg, #fffef8 0%, #fff 100%);
+      border: 1px solid var(--border-gold);
+      border-left: 4px solid var(--gold-bright);
+      border-radius: 12px;
+      padding: 20px 24px;
+      box-shadow: var(--shadow-card);
+      /* enter animation */
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease 0.25s, transform 0.5s cubic-bezier(.22,.68,0,1.2) 0.25s;
+    }
+    .fanbox-accordion.open .fanbox-dialog {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fanbox-dialog-crown {
+      font-size: 16px; color: var(--gold);
+      letter-spacing: 6px; margin-bottom: 10px;
+    }
+    .fanbox-dialog-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(12px, 1.6vw, 15px);
+      color: var(--text-dark);
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+    .fanbox-plan-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    @media (max-width: 560px) { .fanbox-plan-grid { grid-template-columns: 1fr; } }
+    .fanbox-plan-card {
+      background: var(--bg-section-b);
+      border: 1px solid var(--border-gold);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .fanbox-plan-name {
+      font-family: 'Cinzel', serif;
+      font-size: 10px; letter-spacing: 0.22em;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .fanbox-plan-price {
+      font-family: 'EB Garamond', serif;
+      font-size: 16px; color: var(--text-dark);
+      font-weight: 600; margin-bottom: 6px;
+    }
+    .fanbox-plan-desc {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 11px; color: var(--text-soft);
+      line-height: 1.7;
+    }
+    .fanbox-cta {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 11px 32px;
+      background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%);
+      color: #fff;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 11px; letter-spacing: 0.2em;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 4px 18px rgba(184,150,12,0.35);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .fanbox-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(184,150,12,0.50);
+    }
+
+    /* mobile */
+    @media (max-width: 540px) {
+      .nav-links { gap: 16px; }
+      .nav-links a { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════ LOADING ═══════ -->
+<div id="loading">
+  <div class="loading-crown-wrap">
+    <!-- outer shimmer ring -->
+    <div class="orbit-ring-outer"></div>
+    <!-- orbiting stars -->
+    <div class="orbit-ring">
+      <div class="orbit-star" style="transform:rotate(0deg)   translateX(96px)"></div>
+      <div class="orbit-star" style="transform:rotate(45deg)  translateX(96px)"></div>
+      <div class="orbit-star" style="transform:rotate(90deg)  translateX(96px)"></div>
+      <div class="orbit-star" style="transform:rotate(135deg) translateX(96px)"></div>
+      <div class="orbit-star" style="transform:rotate(180deg) translateX(96px)"></div>
+      <div class="orbit-star" style="transform:rotate(225deg) translateX(96px)"></div>
+      <div class="orbit-star" style="transform:rotate(270deg) translateX(96px)"></div>
+      <div class="orbit-star" style="transform:rotate(315deg) translateX(96px)"></div>
+    </div>
+
+    <!-- ▼▼▼  精緻なモノクローム王冠シンボル  ▼▼▼ -->
+    <svg class="loading-crown-svg" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- single antique-gold tone -->
+        <linearGradient id="gMono" x1="0" y1="0" x2="0" y2="140" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="#e8cc60"/>
+          <stop offset="40%"  stop-color="#c8a820"/>
+          <stop offset="75%"  stop-color="#a07808"/>
+          <stop offset="100%" stop-color="#c8a820"/>
+        </linearGradient>
+        <!-- highlight for raised surfaces -->
+        <linearGradient id="gHi" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="#f5e090"/>
+          <stop offset="100%" stop-color="#b88c10"/>
+        </linearGradient>
+        <!-- jewel colour: same gold family -->
+        <radialGradient id="gJewel" cx="50%" cy="35%" r="60%">
+          <stop offset="0%"   stop-color="#f8f0c0"/>
+          <stop offset="60%"  stop-color="#d4af37"/>
+          <stop offset="100%" stop-color="#8a6400"/>
+        </radialGradient>
+        <radialGradient id="gJewelSm" cx="50%" cy="35%" r="60%">
+          <stop offset="0%"   stop-color="#f5e8b0"/>
+          <stop offset="60%"  stop-color="#c49a20"/>
+          <stop offset="100%" stop-color="#7a5800"/>
+        </radialGradient>
+        <!-- filter for engraving look -->
+        <filter id="etch" x="-5%" y="-5%" width="110%" height="110%">
+          <feDropShadow dx="0" dy="1" stdDeviation="0.6" flood-color="#8a6400" flood-opacity="0.5"/>
+        </filter>
+      </defs>
+
+      <!-- ── BASE BAND ── thick with moulded edges -->
+      <rect x="14" y="104" width="132" height="22" rx="3" fill="url(#gMono)" filter="url(#etch)"/>
+      <!-- top bead rail -->
+      <rect x="14" y="104" width="132" height="3" rx="1.5" fill="url(#gHi)" opacity="0.7"/>
+      <!-- bottom bead rail -->
+      <rect x="14" y="123" width="132" height="3" rx="1.5" fill="#7a5800" opacity="0.5"/>
+
+      <!-- ── BAND DETAIL: engraved fleur de lis repeat ── -->
+      <!-- left cluster -->
+      <text x="34"  y="119" text-anchor="middle" font-size="11" fill="#8a6400" opacity="0.55" font-family="serif">❧</text>
+      <text x="80"  y="119" text-anchor="middle" font-size="11" fill="#8a6400" opacity="0.55" font-family="serif">❧</text>
+      <text x="126" y="119" text-anchor="middle" font-size="11" fill="#8a6400" opacity="0.55" font-family="serif">❧</text>
+
+      <!-- ── BAND JEWELS ── -->
+      <!-- centre large oval cabochon -->
+      <ellipse cx="80" cy="115" rx="7" ry="5.5" fill="url(#gJewel)" filter="url(#etch)"/>
+      <ellipse cx="78" cy="113" rx="2.5" ry="1.8" fill="rgba(255,248,200,0.7)"/>
+      <!-- flanking small round cabochons -->
+      <circle cx="53" cy="115" r="4.2" fill="url(#gJewelSm)" filter="url(#etch)"/>
+      <circle cx="52" cy="114" r="1.4" fill="rgba(255,248,200,0.6)"/>
+      <circle cx="107" cy="115" r="4.2" fill="url(#gJewelSm)" filter="url(#etch)"/>
+      <circle cx="106" cy="114" r="1.4" fill="rgba(255,248,200,0.6)"/>
+      <!-- tiny accent dots -->
+      <circle cx="31" cy="115" r="2.5" fill="url(#gJewelSm)"/>
+      <circle cx="129" cy="115" r="2.5" fill="url(#gJewelSm)"/>
+
+      <!-- ── CROWN BODY ── arched silhouette with inner detail -->
+      <!-- main filled shape -->
+      <path d="
+        M14 106
+        L14 72
+        L38 88
+        L56 52
+        L62 64
+        L70 38
+        L80 18
+        L90 38
+        L98 64
+        L104 52
+        L122 88
+        L146 72
+        L146 106
+        Z
+      " fill="url(#gMono)" filter="url(#etch)"/>
+
+      <!-- inner shadow / depth on body -->
+      <path d="
+        M22 106 L22 76 L40 90 L58 56 L65 68 L72 44 L80 26
+        L88 44 L95 68 L102 56 L120 90 L138 76 L138 106 Z
+      " fill="none" stroke="#8a6400" stroke-width="1" opacity="0.25"/>
+
+      <!-- highlight ridge left slope -->
+      <path d="M14 72 L38 88" stroke="url(#gHi)" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+      <!-- highlight ridge right slope -->
+      <path d="M146 72 L122 88" stroke="url(#gHi)" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+      <!-- highlight centre spike -->
+      <path d="M80 18 L70 38 M80 18 L90 38" stroke="#f0dc80" stroke-width="1.2" opacity="0.55"/>
+
+      <!-- ── FILIGREE OVERLAY on body ── -->
+      <!-- left panel scroll -->
+      <path d="M28 100 Q28 88 36 86 Q44 84 44 76" stroke="#9a7410" stroke-width="0.9" fill="none" opacity="0.5"/>
+      <path d="M52 100 Q52 90 48 84" stroke="#9a7410" stroke-width="0.9" fill="none" opacity="0.4"/>
+      <!-- right panel scroll -->
+      <path d="M132 100 Q132 88 124 86 Q116 84 116 76" stroke="#9a7410" stroke-width="0.9" fill="none" opacity="0.5"/>
+      <path d="M108 100 Q108 90 112 84" stroke="#9a7410" stroke-width="0.9" fill="none" opacity="0.4"/>
+      <!-- centre panel arch -->
+      <path d="M66 100 Q66 82 72 72 Q76 64 80 60 Q84 64 88 72 Q94 82 94 100" stroke="#9a7410" stroke-width="0.9" fill="none" opacity="0.4"/>
+
+      <!-- ── CROWN SPIKES: decorative tips ── -->
+      <!-- side small finials (left pair) -->
+      <path d="M38 88 L34 78 L42 80 Z"  fill="#d4af37" opacity="0.9"/>
+      <path d="M56 52 L52 42 L60 46 Z"  fill="#d4af37" opacity="0.85"/>
+      <!-- side small finials (right pair) -->
+      <path d="M122 88 L118 80 L126 78 Z" fill="#d4af37" opacity="0.9"/>
+      <path d="M104 52 L100 46 L108 42 Z" fill="#d4af37" opacity="0.85"/>
+      <!-- centre tall finial -->
+      <path d="M80 18 L74 34 L86 34 Z" fill="#e8cc60" opacity="0.95"/>
+      <!-- tiny fleur cap on centre -->
+      <circle cx="80" cy="18" r="3.5" fill="url(#gJewel)"/>
+      <circle cx="79" cy="17" r="1.2" fill="rgba(255,252,220,0.8)"/>
+
+      <!-- ── TIP CABOCHONS on spikes ── -->
+      <circle cx="38" cy="88" r="3.5" fill="url(#gJewelSm)"/>
+      <circle cx="56" cy="52" r="3.5" fill="url(#gJewelSm)"/>
+      <circle cx="122" cy="88" r="3.5" fill="url(#gJewelSm)"/>
+      <circle cx="104" cy="52" r="3.5" fill="url(#gJewelSm)"/>
+
+      <!-- ── CROWN BASE EDGE highlight ── -->
+      <path d="M14 106 L146 106" stroke="#f0dc80" stroke-width="0.8" opacity="0.4"/>
+
+      <!-- ── FOUR TINY STARS floating beside crown ── -->
+      <text x="6"   y="80" font-size="7" fill="#d4af37" opacity="0.6">✦</text>
+      <text x="150" y="80" font-size="7" fill="#d4af37" opacity="0.6">✦</text>
+      <text x="72"  y="9"  font-size="5" fill="#d4af37" opacity="0.5">✦</text>
+      <text x="84"  y="9"  font-size="5" fill="#d4af37" opacity="0.5">✦</text>
+    </svg>
+    <!-- ▲▲▲ end crown ▲▲▲ -->
+
+  </div>
+  <div class="loading-title">Olivia Royal Chronicle</div>
+  <div class="loading-sub">✦ &nbsp; Royal Gate Opening &nbsp; ✦</div>
+</div>
+
+<!-- ═══════ BG SPARKLES ═══════ -->
+<div class="bg-sparkles" id="bgSparkles"></div>
+
+<!-- ═══════ NAV ═══════ -->
+<nav>
+  <a href="#hero" class="nav-logo">✦ &nbsp;Olivia Royal Chronicle&nbsp; ✦</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#videos">Works</a></li>
+    <li><a href="#links">Links</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section id="hero">
+  <div class="hero-inner">
+    <!-- small crown emblem in hero -->
+    <svg class="hero-emblem" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="hgMono" x1="0" y1="0" x2="0" y2="140" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="#e8cc60"/>
+          <stop offset="50%"  stop-color="#c8a820"/>
+          <stop offset="100%" stop-color="#a07808"/>
+        </linearGradient>
+        <radialGradient id="hgJewel" cx="50%" cy="35%" r="60%">
+          <stop offset="0%"   stop-color="#f8f0c0"/>
+          <stop offset="100%" stop-color="#8a6400"/>
+        </radialGradient>
+      </defs>
+      <rect x="14" y="104" width="132" height="22" rx="3" fill="url(#hgMono)"/>
+      <rect x="14" y="104" width="132" height="3"  rx="1.5" fill="#f5e090" opacity="0.6"/>
+      <ellipse cx="80"  cy="115" rx="7"   ry="5.5" fill="url(#hgJewel)"/>
+      <circle  cx="53"  cy="115" r="4.2"  fill="url(#hgJewel)"/>
+      <circle  cx="107" cy="115" r="4.2"  fill="url(#hgJewel)"/>
+      <path d="M14 106 L14 72 L38 88 L56 52 L62 64 L70 38 L80 18 L90 38 L98 64 L104 52 L122 88 L146 72 L146 106 Z" fill="url(#hgMono)"/>
+      <path d="M80 18 L74 34 L86 34 Z" fill="#e8cc60"/>
+      <circle cx="80" cy="18" r="3.5" fill="url(#hgJewel)"/>
+      <circle cx="38" cy="88" r="3" fill="url(#hgJewel)"/>
+      <circle cx="56" cy="52" r="3" fill="url(#hgJewel)"/>
+      <circle cx="122" cy="88" r="3" fill="url(#hgJewel)"/>
+      <circle cx="104" cy="52" r="3" fill="url(#hgJewel)"/>
+    </svg>
+
+    <p class="hero-eyebrow reveal">Royal VTuber &nbsp;✦&nbsp; Princess of the Castle</p>
+    <h1 class="hero-title reveal">Eiru Olivia</h1>
+    <p class="hero-subtitle reveal">エイル・オリビア</p>
+
+    <div class="hero-ornament reveal">
+      <div class="hero-ornament-line"></div>
+      <div class="hero-ornament-diamond">✦ ✦ ✦</div>
+      <div class="hero-ornament-line"></div>
+    </div>
+
+    <p class="hero-catchcopy reveal">『 姫と外の世界を見に行かない…？ 』</p>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-hint-arrow"></div>
+  </div>
+</section>
+
+<!-- ═══════ ABOUT ═══════ -->
+<section id="about">
+  <div class="royal-divider">✦ &nbsp; ✦ &nbsp; ✦</div>
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">✦ &nbsp; Royal Profile</p>
+    <h2 class="section-title reveal">About the Princess</h2>
+    <div class="section-rule reveal"></div>
+
+    <div class="about-grid">
+      <div class="about-card reveal">
+        <div class="about-card-icon">👑</div>
+        <div>
+          <div class="about-card-label">Name</div>
+          <div class="about-card-value">エイル・オリビア<br><span>Eiru Olivia</span></div>
+        </div>
+      </div>
+      <div class="about-card reveal">
+        <div class="about-card-icon">🎂</div>
+        <div>
+          <div class="about-card-label">Birthday</div>
+          <div class="about-card-value">11月01日<br><span>November 1st</span></div>
+        </div>
+      </div>
+      <div class="about-card reveal">
+        <div class="about-card-icon">🎀</div>
+        <div>
+          <div class="about-card-label">Genre</div>
+          <div class="about-card-value">王女系 VTuber<br><span>Princess VTuber</span></div>
+        </div>
+      </div>
+      <div class="about-card reveal" style="transition-delay:0.1s;">
+        <div class="about-card-icon">🍖</div>
+        <div>
+          <div class="about-card-label">Favourites ♡</div>
+          <div class="about-card-value">お肉！！甘いもの！<br><span>Meat &amp; Sweets 🍰</span></div>
+        </div>
+      </div>
+      <div class="about-card reveal" style="transition-delay:0.15s; grid-column:span 2;">
+        <div class="about-card-icon">🙈</div>
+        <div>
+          <div class="about-card-label">Not So Good With…</div>
+          <div class="about-card-value">怖いことと、お野菜<br><span>Scary things &amp; Vegetables 🥦</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SD accent chars -->
+    <div class="about-sd-row reveal" style="transition-delay:0.2s;">
+      <img class="sd-char" src="/mnt/user-data/uploads/olivia_sd.png" alt="エイル・オリビア SDキャラ" />
+      <img class="sd-char" src="/mnt/user-data/uploads/olivia_sdkirame.png" alt="エイル・オリビア キラ目SD" style="animation-delay:0.7s;" />
+    </div>
+
+    <div class="about-message reveal">
+      <div class="about-message-deco">✦ &nbsp; ✦ &nbsp; ✦</div>
+      <p class="about-message-text">
+        お城に引きこもってるだけじゃダメ！<br>
+        もっと外の世界も知りたい！<br>
+        そんな想いから配信活動をしております 🫶
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ VIDEOS ═══════ -->
+<section id="videos">
+  <div class="royal-divider">✦ &nbsp; ✦ &nbsp; ✦</div>
+  <div class="section-inner">
+    <!-- SD accent (top-right float) -->
+    <div class="videos-sd-row reveal">
+      <img class="sd-char" src="/mnt/user-data/uploads/olivia_sdkirame.png" alt="エイル・オリビア キラ目SD" style="animation-delay:0.3s;" />
+      <img class="sd-char" src="/mnt/user-data/uploads/olivia_sd.png" alt="エイル・オリビア SDキャラ" style="animation-delay:0.9s;" />
+    </div>
+
+    <p class="section-eyebrow reveal">✦ &nbsp; Royal Stage</p>
+    <h2 class="section-title reveal">Works &amp; Singing</h2>
+    <div class="section-rule reveal"></div>
+
+    <div class="video-grid">
+      <div class="video-card reveal">
+        <div class="video-label">✦ &nbsp; Introduction</div>
+        <div class="video-frame-wrap">
+          <iframe src="https://www.youtube.com/embed/qwdxOoI5FFg" title="自己紹介 | エイル・オリビア" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="video-caption">【自己紹介】Vtuber一問一答自己紹介 / エイル・オリビア</div>
+      </div>
+      <div class="video-card reveal" style="transition-delay:0.08s;">
+        <div class="video-label">✦ &nbsp; Singing Cover</div>
+        <div class="video-frame-wrap">
+          <iframe src="https://www.youtube.com/embed/r2Z6UiHdato" title="コネクト" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="video-caption">コネクト / ClariS Covered by エイル・オリビア×瀬名にゃんぽこら</div>
+      </div>
+      <div class="video-card reveal" style="transition-delay:0.14s;">
+        <div class="video-label">✦ &nbsp; Singing Cover</div>
+        <div class="video-frame-wrap">
+          <iframe src="https://www.youtube.com/embed/FaPlhWD1kw4" title="ロミオとシンデレラ" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="video-caption">ロミオとシンデレラ／cover【エイル・オリビア】</div>
+      </div>
+      <div class="video-card reveal" style="transition-delay:0.20s;">
+        <div class="video-label">✦ &nbsp; Singing Cover</div>
+        <div class="video-frame-wrap">
+          <iframe src="https://www.youtube.com/embed/v556FsrukAI" title="白い雪のプリンセスは" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="video-caption">白い雪のプリンセスは -Re:incarnation- / のぼる↑ (cover)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FANBOX GUIDE ═══════ -->
+<section id="fanbox">
+  <div class="royal-divider">✦ &nbsp; ✦ &nbsp; ✦</div>
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">✦ &nbsp; Royal Membership</p>
+    <h2 class="section-title reveal">FANBOX のご案内</h2>
+    <div class="section-rule reveal"></div>
+
+    <div class="fanbox-accordion reveal" id="fanboxAccordion">
+      <!-- trigger button -->
+      <button class="fanbox-trigger" id="fanboxTrigger" aria-expanded="false" aria-controls="fanboxDrawer">
+        <div class="fanbox-trigger-left">
+          <div class="fanbox-trigger-icon">💌</div>
+          <div class="fanbox-trigger-text">
+            <div class="fanbox-trigger-label">✦ &nbsp; Support Plans</div>
+            <div class="fanbox-trigger-title">FANBOX プランを見る</div>
+          </div>
+        </div>
+        <div class="fanbox-chevron" aria-hidden="true">▼</div>
+      </button>
+
+      <!-- drawer -->
+      <div class="fanbox-drawer" id="fanboxDrawer" role="region" aria-labelledby="fanboxTrigger">
+        <div class="fanbox-drawer-inner">
+
+          <!-- FANBOX guideline image -->
+          <div class="fanbox-img-wrap">
+            <img src="/mnt/user-data/uploads/olivia_fanboxguideline.png"
+                 alt="エイル・オリビア FANBOXプランガイドライン"
+                 loading="lazy" />
+          </div>
+
+          <!-- dialog card (delayed pop-in) -->
+          <div class="fanbox-dialog" id="fanboxDialog">
+            <div class="fanbox-dialog-crown">✦ &nbsp; ✦ &nbsp; ✦</div>
+            <div class="fanbox-dialog-title">✦ &nbsp; FANBOXプランのご紹介</div>
+            <div class="fanbox-plan-grid">
+              <div class="fanbox-plan-card">
+                <div class="fanbox-plan-name">Plan 01</div>
+                <div class="fanbox-plan-price">¥500 &nbsp;/&nbsp; 月</div>
+                <div class="fanbox-plan-desc">
+                  エイル応援隊プラン<br>
+                  日常アカウントご招待・Discord 鯖ご招待・加入特典・先行情報
+                </div>
+              </div>
+              <div class="fanbox-plan-card">
+                <div class="fanbox-plan-name">Plan 02</div>
+                <div class="fanbox-plan-price">¥1,000 &nbsp;/&nbsp; 月</div>
+                <div class="fanbox-plan-desc">
+                  エイルの執事プラン<br>
+                  応援隊プラン特典 ＋ プライベート日記・限定壁紙（不定期）
+                </div>
+              </div>
+              <div class="fanbox-plan-card">
+                <div class="fanbox-plan-name">Plan 03</div>
+                <div class="fanbox-plan-price">¥5,000 &nbsp;/&nbsp; 月</div>
+                <div class="fanbox-plan-desc">
+                  エイル大好きプラン<br>
+                  執事プラン特典 ＋ 企画案公開・イラスト先行公開・通話会体験券・誕生月メッセージ動画
+                </div>
+              </div>
+              <div class="fanbox-plan-card">
+                <div class="fanbox-plan-name">Plan 04</div>
+                <div class="fanbox-plan-price">¥10,000 &nbsp;/&nbsp; 月</div>
+                <div class="fanbox-plan-desc">
+                  姫と甘々プラン<br>
+                  大好きプラン特典 ＋ 15分限定通話（月1回）またはシチュエーションボイス動画・継続特典
+                </div>
+              </div>
+            </div>
+            <a class="fanbox-cta" href="https://eiruolibia.fanbox.cc/" target="_blank" rel="noopener">
+              ✦ &nbsp; FANBOX で応援する &nbsp; ✦
+            </a>
+          </div>
+          <!-- /fanbox-dialog -->
+
+        </div>
+      </div>
+      <!-- /fanbox-drawer -->
+    </div>
+    <!-- /fanbox-accordion -->
+
+  </div>
+</section>
+
+<!-- ═══════ LINKS ═══════ -->
+<section id="links">
+  <div class="royal-divider">✦ &nbsp; ✦ &nbsp; ✦</div>
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">✦ &nbsp; Royal Connections</p>
+    <h2 class="section-title reveal">Links &amp; SNS</h2>
+    <div class="section-rule reveal"></div>
+
+    <div class="links-grid">
+      <a class="link-card reveal" href="https://www.youtube.com/@EiruOlibia" target="_blank" rel="noopener">
+        <div class="link-icon">▶️</div>
+        <div class="link-name">YouTube</div>
+        <div class="link-desc">@EiruOlibia</div>
+      </a>
+      <a class="link-card reveal" href="https://x.com/Eiru_Olibia" target="_blank" rel="noopener" style="transition-delay:0.05s;">
+        <div class="link-icon">🐦</div>
+        <div class="link-name">X / Twitter</div>
+        <div class="link-desc">@Eiru_Olibia</div>
+      </a>
+      <a class="link-card reveal" href="https://www.twitch.tv/eiruolibia_vtuber" target="_blank" rel="noopener" style="transition-delay:0.10s;">
+        <div class="link-icon">🎮</div>
+        <div class="link-name">Twitch</div>
+        <div class="link-desc">eiruolibia_vtuber</div>
+      </a>
+      <a class="link-card reveal" href="https://eiruolibia.fanbox.cc/" target="_blank" rel="noopener" style="transition-delay:0.13s;">
+        <div class="link-icon">💌</div>
+        <div class="link-name">FANBOX</div>
+        <div class="link-desc">eiruolibia.fanbox.cc</div>
+      </a>
+      <a class="link-card reveal" href="https://eiruolibia.booth.pm/" target="_blank" rel="noopener" style="transition-delay:0.16s;">
+        <div class="link-icon">🛍️</div>
+        <div class="link-name">BOOTH</div>
+        <div class="link-desc">eiruolibia.booth.pm</div>
+      </a>
+      <a class="link-card reveal" href="https://gi-pt.com/main/wishlist/creator-view" target="_blank" rel="noopener" style="transition-delay:0.19s;">
+        <div class="link-icon">🎁</div>
+        <div class="link-name">Gipt</div>
+        <div class="link-desc">Wish List</div>
+      </a>
+      <a class="link-card reveal" href="mailto:eiruuuuudesu@gmail.com" style="transition-delay:0.22s;">
+        <div class="link-icon">✉️</div>
+        <div class="link-name">Mail</div>
+        <div class="link-desc">お仕事のご依頼など</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="footer-logo">Olivia Royal Chronicle</div>
+  <div class="footer-sub">✦ &nbsp; The Royal Adventure of Eiru Olivia &nbsp; ✦</div>
+  <div class="footer-deco">✦ &nbsp; ✦ &nbsp; ✦</div>
+  <p class="footer-copy">© 2024 Eiru Olivia. All rights reserved.</p>
+</footer>
+
+<script>
+  /* ── LOADING ── */
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loading').classList.add('hidden');
+    }, 3000);
+  });
+
+  /* ── BG SPARKLES (light gold / rose on white) ── */
+  const sc = document.getElementById('bgSparkles');
+  const colours = ['#d4af37','#c8a820','#e8cc60','#d49090'];
+  for (let i = 0; i < 36; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.left  = Math.random() * 100 + '%';
+    s.style.top   = Math.random() * 100 + '%';
+    const sz = 1.5 + Math.random() * 2.5;
+    s.style.width  = sz + 'px';
+    s.style.height = sz + 'px';
+    s.style.background = colours[Math.floor(Math.random()*colours.length)];
+    s.style.setProperty('--dur',   (4 + Math.random() * 6) + 's');
+    s.style.setProperty('--delay', (Math.random() * 8) + 's');
+    s.style.opacity = '0';
+    sc.appendChild(s);
+  }
+
+  /* ── SCROLL REVEAL ── */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ── HERO reveals after loading ── */
+  document.querySelectorAll('#hero .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), 3200 + i * 160);
+  });
+
+  /* ── REDUCED MOTION ── */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.getElementById('loading').classList.add('hidden');
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }
+</script>
+</body>
+</html>
