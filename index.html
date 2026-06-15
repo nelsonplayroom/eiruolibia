@@ -133,13 +133,6 @@
       padding:90px clamp(20px,6vw,80px) 70px;text-align:center;
       background:var(--bg-hero);overflow:hidden;
     }
-    #hero::before{
-      content:'';position:absolute;inset:0;z-index:0;
-      background-image:
-        radial-gradient(ellipse 70% 60% at 50% 38%,rgba(212,175,55,.07) 0%,transparent 70%),
-        radial-gradient(ellipse 40% 40% at 15% 85%,rgba(176,96,96,.05) 0%,transparent 60%),
-        radial-gradient(ellipse 40% 40% at 85% 15%,rgba(184,150,12,.05) 0%,transparent 60%);
-    }
     #hero::after{
       content:'';position:absolute;inset:0;z-index:0;
       background-image:linear-gradient(rgba(184,150,12,.04) 1px,transparent 1px),
@@ -216,7 +209,6 @@
     .about-card-value{font-family:'EB Garamond',serif;font-size:clamp(15px,1.8vw,18px);color:var(--text-dark);line-height:1.55;}
     .about-card-value span{font-size:13px;color:var(--text-muted);}
 
-    /* SD chars in About */
     .about-sd-row{
       display:flex;justify-content:center;align-items:flex-end;
       gap:clamp(20px,5vw,60px);margin-top:44px;padding-bottom:4px;
@@ -237,7 +229,6 @@
     /* SD common */
     .sd-char{
       height:auto;object-fit:contain;
-      /* PNG images have black BG → multiply blends it away on white */
       mix-blend-mode:multiply;
       filter:drop-shadow(0 4px 18px rgba(184,150,12,.18));
       animation:sdFloat 4s ease-in-out infinite;
@@ -250,7 +241,6 @@
 
     /* ══ VIDEOS ══ */
     #videos{background:var(--bg-sec-b);}
-    /* SD pair floated top-right of section header */
     .videos-sd-row{
       display:flex;justify-content:flex-end;align-items:flex-end;
       gap:16px;margin-bottom:-8px;
@@ -267,6 +257,267 @@
     .video-caption{padding:6px 16px 13px;font-family:'Noto Sans JP',sans-serif;font-size:11.5px;color:var(--text-soft);line-height:1.55;}
     .video-frame-wrap{position:relative;padding-bottom:56.25%;height:0;}
     .video-frame-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+
+    /* ══ GUIDELINES ══ */
+    #guidelines { background: var(--bg-sec-a); }
+
+    /* 全体を囲む王室額縁ラッパー */
+    .guideline-frame-outer {
+      position: relative;
+      padding: 3px; /* border gradient のため */
+      border-radius: 20px;
+    }
+
+    /* 額縁SVGオーバーレイ（外側全体を囲む） */
+    .guideline-frame-border {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+      border-radius: 20px;
+      overflow: visible;
+    }
+
+    /* ガラス質インナーコンテナ */
+    .guideline-glass {
+      position: relative;
+      z-index: 1;
+      border-radius: 18px;
+      overflow: hidden;
+      /* ガラス質感 */
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,252,240,0.82) 0%,
+          rgba(255,255,255,0.70) 30%,
+          rgba(250,246,234,0.78) 60%,
+          rgba(255,252,240,0.85) 100%
+        );
+      backdrop-filter: blur(18px) saturate(1.5) brightness(1.04);
+      -webkit-backdrop-filter: blur(18px) saturate(1.5) brightness(1.04);
+      box-shadow:
+        0 8px 48px rgba(184,150,12,0.16),
+        0 2px 12px rgba(26,18,8,0.07),
+        inset 0 1px 0 rgba(255,248,200,0.60),
+        inset 0 -1px 0 rgba(184,150,12,0.12);
+    }
+
+    /* ガラス内の光沢ハイライト */
+    .guideline-glass::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(180deg, rgba(255,252,220,0.28) 0%, transparent 100%);
+      border-radius: 18px 18px 0 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ヘッダー帯 */
+    .guideline-header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 36px 32px 28px;
+      border-bottom: 1px solid rgba(184,150,12,0.20);
+      background: linear-gradient(180deg, rgba(255,250,225,0.55) 0%, rgba(255,255,255,0.10) 100%);
+    }
+    .guideline-header-crown {
+      font-size: 28px;
+      line-height: 1;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 2px 8px rgba(184,150,12,0.45));
+    }
+    .guideline-header-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: .44em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .guideline-header-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(16px, 3vw, 26px);
+      letter-spacing: .1em;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+    }
+    .guideline-header-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 6px;
+    }
+    .guideline-header-ornament-line {
+      flex: 1;
+      max-width: 100px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-bright), transparent);
+    }
+    .guideline-header-ornament-diamond {
+      font-size: 10px;
+      color: var(--gold);
+      letter-spacing: 5px;
+    }
+
+    /* グリッドコンテナ */
+    .guideline-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 0;
+    }
+
+    /* 各カテゴリカード */
+    .guideline-card {
+      padding: 28px 28px 26px;
+      border-right: 1px solid rgba(184,150,12,0.14);
+      border-bottom: 1px solid rgba(184,150,12,0.14);
+      position: relative;
+      transition: background .3s ease;
+    }
+    .guideline-card:hover {
+      background: rgba(255,250,225,0.35);
+    }
+    /* 右端・下端のボーダー除去 */
+    .guideline-card:nth-child(2n) { border-right: none; }
+    @media (max-width: 620px) {
+      .guideline-card { border-right: none; }
+    }
+    /* 最後の行はborder-bottom除去 */
+    .guideline-card:nth-last-child(-n+2):not(:nth-child(odd):last-child) { border-bottom: none; }
+    .guideline-card:last-child { border-bottom: none; border-right: none; }
+
+    /* カテゴリタイトル */
+    .guideline-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .guideline-card-icon {
+      font-size: 20px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .guideline-card-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(10px, 1.4vw, 13px);
+      color: var(--text-dark);
+      letter-spacing: .08em;
+      line-height: 1.4;
+    }
+    .guideline-card-rule {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold-bright), rgba(212,175,55,0.2));
+      margin-bottom: 16px;
+    }
+
+    /* ルールリスト */
+    .guideline-rules {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .guideline-rules li {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: clamp(11px, 1.2vw, 12.5px);
+      color: var(--text-mid);
+      line-height: 1.75;
+      padding-left: 16px;
+      position: relative;
+    }
+    .guideline-rules li::before {
+      content: '★';
+      position: absolute;
+      left: 0;
+      top: 2px;
+      font-size: 8px;
+      color: var(--gold);
+      line-height: 1.9;
+    }
+    .guideline-rules li.note {
+      font-size: clamp(10px, 1.1vw, 11.5px);
+      color: var(--text-muted);
+      font-style: italic;
+      padding-left: 16px;
+    }
+    .guideline-rules li.note::before {
+      content: '※';
+      color: var(--rose-light);
+    }
+
+    /* フッター帯 */
+    .guideline-footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 20px 32px 26px;
+      border-top: 1px solid rgba(184,150,12,0.18);
+      background: linear-gradient(0deg, rgba(255,250,225,0.45) 0%, rgba(255,255,255,0.05) 100%);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(11px, 1.3vw, 13px);
+      color: var(--text-muted);
+      letter-spacing: .16em;
+    }
+
+    /* X / Twitter セクション */
+    .guideline-x-section {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid rgba(184,150,12,0.20);
+      background: linear-gradient(135deg, rgba(255,252,235,0.50) 0%, rgba(255,255,255,0.30) 100%);
+      padding: 28px 28px 26px;
+    }
+    .guideline-x-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .guideline-x-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+    .guideline-x-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(10px, 1.4vw, 13px);
+      color: var(--text-dark);
+      letter-spacing: .08em;
+    }
+    .guideline-x-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 560px) {
+      .guideline-x-grid { grid-template-columns: 1fr; }
+    }
+    .guideline-x-card {
+      background: rgba(255,252,240,0.65);
+      border: 1px solid rgba(184,150,12,0.18);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+    .guideline-x-card-label {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: .32em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(184,150,12,0.15);
+    }
 
     /* ══ FANBOX ACCORDION ══ */
     #fanbox{background:var(--bg-sec-a);}
@@ -296,14 +547,12 @@
     .fanbox-accordion.open .fanbox-drawer{max-height:1400px;}
     .fanbox-drawer-inner{padding:0 28px 28px;border-top:1px solid var(--border-gold);}
 
-    /* guideline image */
     .fanbox-img-wrap{
       margin-top:24px;border-radius:12px;overflow:hidden;
       border:1px solid var(--border-gold);box-shadow:var(--shadow-card);
     }
     .fanbox-img-wrap img{width:100%;height:auto;display:block;}
 
-    /* dialog / description card – delayed pop-in */
     .fanbox-dialog{
       margin-top:20px;
       background:linear-gradient(135deg,#fffef8 0%,#fff 100%);
@@ -311,7 +560,6 @@
       border-left:4px solid var(--gold-bright);
       border-radius:12px;padding:20px 24px;
       box-shadow:var(--shadow-card);
-      /* hidden by default; revealed when accordion is open */
       opacity:0;transform:translateY(16px);
       transition:opacity .5s ease .28s,transform .5s cubic-bezier(.22,.68,0,1.2) .28s;
     }
@@ -358,8 +606,8 @@
 
     /* ══ IVY VINE TEXTURE ══ */
     :root {
-      --ivy-a: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiB2aWV3Qm94PSIwIDAgNDAwIDQwMCI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC52e2ZpbGw6bm9uZTtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7fQogICAgICAudmluZXtzdHJva2U6cmdiYSgxNDAsMTIwLDYwLDAuMDkpO30KICAgICAgLmxlYWZ7ZmlsbDpyZ2JhKDEzMCwxMTUsNTUsMC4wNyk7c3Ryb2tlOm5vbmU7fQogICAgICAudmluZWJ7c3Ryb2tlOnJnYmEoMTYwLDEzMCw1MCwwLjA2KTt9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KCiAgPCEtLSBNYWluIGRpYWdvbmFsIHZpbmUgQSAodG9wLWxlZnQgdG8gYm90dG9tLXJpZ2h0KSAtLT4KICA8cGF0aCBjbGFzcz0idiB2aW5lIiBzdHJva2Utd2lkdGg9IjEuMiIKICAgIGQ9Ik0tMTAsODAgQzQwLDYwIDgwLDEwMCAxMjAsODAgQzE2MCw2MCAxOTAsMTEwIDI0MCw5NQogICAgICAgQzI5MCw4MCAzMzAsMTIwIDM4MCwxMDAgQzQwMCw5NCA0MjAsOTAgNDQwLDg1Ii8+CiAgPCEtLSBCcmFuY2ggZnJvbSB2aW5lIEEgLS0+CiAgPHBhdGggY2xhc3M9InYgdmluZSIgc3Ryb2tlLXdpZHRoPSIwLjgiCiAgICBkPSJNODAsOTUgQzc1LDcwIDYwLDU1IDQ1LDQwIEMzNSwzMCAyOCwxOCAyMCw4Ii8+CiAgPHBhdGggY2xhc3M9InYgdmluZSIgc3Ryb2tlLXdpZHRoPSIwLjgiCiAgICBkPSJNMTkwLDEwMiBDMTk1LDc4IDIxMCw2MiAyMjUsNDggQzIzNSwzOCAyNDUsMjUgMjUyLDEyIi8+CiAgPHBhdGggY2xhc3M9InYgdmluZSIgc3Ryb2tlLXdpZHRoPSIwLjgiCiAgICBkPSJNMzEwLDEwOCBDMzA1LDgyIDI5NSw2NSAyODAsNTAiLz4KCiAgPCEtLSBWaW5lIEIgKG9wcG9zaXRlIGRpYWdvbmFsKSAtLT4KICA8cGF0aCBjbGFzcz0idiB2aW5lYiIgc3Ryb2tlLXdpZHRoPSIxLjAiCiAgICBkPSJNLTEwLDI4MCBDNTAsMjYwIDEwMCwzMDAgMTUwLDI4NQogICAgICAgQzIwMCwyNzAgMjQwLDMxMCAyOTAsMjk1IEMzMzAsMjgzIDM2MCwzMDAgNDEwLDI5MCIvPgogIDxwYXRoIGNsYXNzPSJ2IHZpbmViIiBzdHJva2Utd2lkdGg9IjAuNyIKICAgIGQ9Ik0xMTAsMjkwIEMxMDUsMzE4IDk1LDM0MCA4MCwzNjAgQzcwLDM3NSA2MCwzODggNTAsNDAwIi8+CiAgPHBhdGggY2xhc3M9InYgdmluZWIiIHN0cm9rZS13aWR0aD0iMC43IgogICAgZD0iTTIzMCwyOTIgQzIzNSwzMTggMjQ4LDM0MCAyNjAsMzU4IEMyNjgsMzcyIDI3NCwzODggMjc4LDQwMCIvPgoKICA8IS0tIFZlcnRpY2FsIHZpbmUgbGVmdCAtLT4KICA8cGF0aCBjbGFzcz0idiB2aW5lIiBzdHJva2Utd2lkdGg9IjAuOSIKICAgIGQ9Ik02MCziiJIxMCBDNDUsNDAgNjUsODAgNTAsMTMwIEMzNSwxODAgNTUsMjIwIDQwLDI3MAogICAgICAgQzI1LDMyMCA0NSwzNjAgMzAsNDEwIi8+CiAgPCEtLSBWZXJ0aWNhbCB2aW5lIHJpZ2h0IC0tPgogIDxwYXRoIGNsYXNzPSJ2IHZpbmViIiBzdHJva2Utd2lkdGg9IjAuOCIKICAgIGQ9Ik0zNDAs4oiSMTAgQzM1NSw1MCAzMzUsOTAgMzUwLDE0NSBDMzY1LDIwMCAzNDUsMjQwIDM1OCwyOTUKICAgICAgIEMzNzAsMzQ1IDM1MiwzNzUgMzY1LDQxMCIvPgoKICA8IS0tIExlYXZlcyBjbHVzdGVyIDEgKGFyb3VuZCA4MCw5NSkgLS0+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSI2OCIgY3k9Ijc4IiByeD0iOSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKC0zNSw2OCw3OCkiLz4KICA8ZWxsaXBzZSBjbGFzcz0ibGVhZiIgY3g9IjU4IiBjeT0iNjgiIHJ4PSI4IiByeT0iNCIgdHJhbnNmb3JtPSJyb3RhdGUoLTUwLDU4LDY4KSIvPgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iOTIiIGN5PSI3MiIgcng9IjciIHJ5PSI0IiB0cmFuc2Zvcm09InJvdGF0ZSgyMCw5Miw3MikiLz4KICA8IS0tIHNtYWxsIDUtcG9pbnRlZCBsZWFmIHNoYXBlcyAtLT4KICA8cGF0aCBjbGFzcz0ibGVhZiIgZD0iTTQ1LDQyIEM0MiwzNiAzNiwzMyA0MCwyOCBDNDQsMjMgNTAsMjggNTAsMzUgQzU0LDI4IDYwLDI1IDYwLDMyIEM2MCwzOCA1Miw0MCA0OCw0MloiIG9wYWNpdHk9IjAuNiIvPgoKICA8IS0tIExlYXZlcyBjbHVzdGVyIDIgKGFyb3VuZCAxOTAsMTAyKSAtLT4KICA8ZWxsaXBzZSBjbGFzcz0ibGVhZiIgY3g9IjIwNCIgY3k9Ijg1IiByeD0iOSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKDMwLDIwNCw4NSkiLz4KICA8ZWxsaXBzZSBjbGFzcz0ibGVhZiIgY3g9IjIxOCIgY3k9IjcyIiByeD0iOCIgcnk9IjQiIHRyYW5zZm9ybT0icm90YXRlKDQ1LDIxOCw3MikiLz4KICA8ZWxsaXBzZSBjbGFzcz0ibGVhZiIgY3g9IjIyOCIgY3k9IjU4IiByeD0iNyIgcnk9IjQiIHRyYW5zZm9ybT0icm90YXRlKDU1LDIyOCw1OCkiLz4KICA8cGF0aCBjbGFzcz0ibGVhZiIgZD0iTTI0OCwxNiBDMjQ1LDEwIDI0MCw3IDI0MiwyIEMyNDUsLTIgMjUxLDIgMjUyLDkgQzI1NSwyIDI2MSwtMSAyNjEsNiBDMjYxLDEyIDI1NCwxNSAyNTAsMTZaIiBvcGFjaXR5PSIwLjYiLz4KCiAgPCEtLSBMZWF2ZXMgY2x1c3RlciAzIChhcm91bmQgMzAwLDEwOCkgLS0+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSIyODgiIGN5PSI5MCIgcng9IjkiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgtMjUsMjg4LDkwKSIvPgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iMjc2IiBjeT0iNzYiIHJ4PSI4IiByeT0iNCIgdHJhbnNmb3JtPSJyb3RhdGUoLTQwLDI3Niw3NikiLz4KCiAgPCEtLSBMZWF2ZXMgY2x1c3RlciA0IChib3R0b20gdmluZSkgLS0+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSI5NiIgY3k9IjMwOCIgcng9IjkiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSg0MCw5NiwzMDgpIi8+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSI4MiIgY3k9IjMyNCIgcng9IjgiIHJ5PSI0IiB0cmFuc2Zvcm09InJvdGF0ZSg1NSw4MiwzMjQpIi8+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSI2OCIgY3k9IjM0MiIgcng9IjciIHJ5PSI0IiB0cmFuc2Zvcm09InJvdGF0ZSg2NSw2OCwzNDIpIi8+CiAgPHBhdGggY2xhc3M9ImxlYWYiIGQ9Ik01MiwzOTggQzQ5LDM5MiA0NCwzODkgNDYsMzg0IEM0OSwzODAgNTUsMzg0IDU2LDM5MSBDNTksMzg0IDY1LDM4MSA2NSwzODggQzY1LDM5NCA1NywzOTcgNTQsMzk4WiIgb3BhY2l0eT0iMC42Ii8+CgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iMjQ0IiBjeT0iMzEwIiByeD0iOSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKC00MCwyNDQsMzEwKSIvPgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iMjU4IiBjeT0iMzI2IiByeD0iOCIgcnk9IjQiIHRyYW5zZm9ybT0icm90YXRlKC01NSwyNTgsMzI2KSIvPgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iMjcwIiBjeT0iMzQ0IiByeD0iNyIgcnk9IjQiIHRyYW5zZm9ybT0icm90YXRlKC02NSwyNzAsMzQ0KSIvPgoKICA8IS0tIExlYXZlcyBvbiB2ZXJ0aWNhbCB2aW5lcyAtLT4KICA8ZWxsaXBzZSBjbGFzcz0ibGVhZiIgY3g9IjQ0IiBjeT0iNjAiICByeD0iOCIgcnk9IjQiIHRyYW5zZm9ybT0icm90YXRlKC02MCw0NCw2MCkiLz4KICA8ZWxsaXBzZSBjbGFzcz0ibGVhZiIgY3g9IjUyIiBjeT0iMTYwIiByeD0iOCIgcnk9IjQiIHRyYW5zZm9ybT0icm90YXRlKC00NSw1MiwxNjApIi8+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSI0NCIgY3k9IjI0NSIgcng9IjgiIHJ5PSI0IiB0cmFuc2Zvcm09InJvdGF0ZSgtNjAsNDQsMjQ1KSIvPgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iNTIiIGN5PSIzNDAiIHJ4PSI4IiByeT0iNCIgdHJhbnNmb3JtPSJyb3RhdGUoLTQ1LDUyLDM0MCkiLz4KCiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSIzNTYiIGN5PSI3NSIgIHJ4PSI4IiByeT0iNCIgdHJhbnNmb3JtPSJyb3RhdGUoNTUsMzU2LDc1KSIvPgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iMzQ4IiBjeT0iMTcwIiByeD0iOCIgcnk9IjQiIHRyYW5zZm9ybT0icm90YXRlKDQ1LDM0OCwxNzApIi8+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSIzNTYiIGN5PSIyNjAiIHJ4PSI4IiByeT0iNCIgdHJhbnNmb3JtPSJyb3RhdGUoNjAsMzU2LDI2MCkiLz4KICA8ZWxsaXBzZSBjbGFzcz0ibGVhZiIgY3g9IjM1MCIgY3k9IjM2MCIgcng9IjgiIHJ5PSI0IiB0cmFuc2Zvcm09InJvdGF0ZSg0NSwzNTAsMzYwKSIvPgoKICA8IS0tIHRpbnkgYmVycnkgZG90cyAtLT4KICA8Y2lyY2xlIGZpbGw9InJnYmEoMTQwLDEwMCw4MCwwLjA3KSIgY3g9IjEyMCIgY3k9Ijc4IiByPSIzIi8+CiAgPGNpcmNsZSBmaWxsPSJyZ2JhKDE0MCwxMDAsODAsMC4wNikiIGN4PSIyNDAiIGN5PSI5NCIgcj0iMi41Ii8+CiAgPGNpcmNsZSBmaWxsPSJyZ2JhKDE0MCwxMDAsODAsMC4wNikiIGN4PSIxNTAiIGN5PSIyODIiIHI9IjIuNSIvPgogIDxjaXJjbGUgZmlsbD0icmdiYSgxNDAsMTAwLDgwLDAuMDUpIiBjeD0iMjk1IiBjeT0iMjkyIiByPSIzIi8+Cjwvc3ZnPg==");
-      --ivy-b: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiB2aWV3Qm94PSIwIDAgNDAwIDQwMCI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC52e2ZpbGw6bm9uZTtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7fQogICAgICAudmluZXtzdHJva2U6cmdiYSgxMzAsMTEwLDUwLDAuMTApO30KICAgICAgLmxlYWZ7ZmlsbDpyZ2JhKDEyMCwxMDUsNDUsMC4wOCk7c3Ryb2tlOm5vbmU7fQogICAgICAudmluZWJ7c3Ryb2tlOnJnYmEoMTUwLDEyMCw0MiwwLjA3KTt9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KCiAgPCEtLSBNYWluIGRpYWdvbmFsIHZpbmUgQSAodG9wLWxlZnQgdG8gYm90dG9tLXJpZ2h0KSAtLT4KICA8cGF0aCBjbGFzcz0idiB2aW5lIiBzdHJva2Utd2lkdGg9IjEuMiIKICAgIGQ9Ik0tMTAsODAgQzQwLDYwIDgwLDEwMCAxMjAsODAgQzE2MCw2MCAxOTAsMTEwIDI0MCw5NQogICAgICAgQzI5MCw4MCAzMzAsMTIwIDM4MCwxMDAgQzQwMCw5NCA0MjAsOTAgNDQwLDg1Ii8+CiAgPCEtLSBCcmFuY2ggZnJvbSB2aW5lIEEgLS0+CiAgPHBhdGggY2xhc3M9InYgdmluZSIgc3Ryb2tlLXdpZHRoPSIwLjgiCiAgICBkPSJNODAsOTUgQzc1LDcwIDYwLDU1IDQ1LDQwIEMzNSwzMCAyOCwxOCAyMCw4Ii8+CiAgPHBhdGggY2xhc3M9InYgdmluZSIgc3Ryb2tlLXdpZHRoPSIwLjgiCiAgICBkPSJNMTkwLDEwMiBDMTk1LDc4IDIxMCw2MiAyMjUsNDggQzIzNSwzOCAyNDUsMjUgMjUyLDEyIi8+CiAgPHBhdGggY2xhc3M9InYgdmluZSIgc3Ryb2tlLXdpZHRoPSIwLjgiCiAgICBkPSJNMzEwLDEwOCBDMzA1LDgyIDI5NSw2NSAyODAsNTAiLz4KCiAgPCEtLSBWaW5lIEIgKG9wcG9zaXRlIGRpYWdvbmFsKSAtLT4KICA8cGF0aCBjbGFzcz0idiB2aW5lYiIgc3Ryb2tlLXdpZHRoPSIxLjAiCiAgICBkPSJNLTEwLDI4MCBDNTAsMjYwIDEwMCwzMDAgMTUwLDI4NQogICAgICAgQzIwMCwyNzAgMjQwLDMxMCAyOTAsMjk1IEMzMzAsMjgzIDM2MCwzMDAgNDEwLDI5MCIvPgogIDxwYXRoIGNsYXNzPSJ2IHZpbmViIiBzdHJva2Utd2lkdGg9IjAuNyIKICAgIGQ9Ik0xMTAsMjkwIEMxMDUsMzE4IDk1LDM0MCA4MCwzNjAgQzcwLDM3NSA2MCwzODggNTAsNDAwIi8+CiAgPHBhdGggY2xhc3M9InYgdmluZWIiIHN0cm9rZS13aWR0aD0iMC43IgogICAgZD0iTTIzMCwyOTIgQzIzNSwzMTggMjQ4LDM0MCAyNjAsMzU4IEMyNjgsMzcyIDI3NCwzODggMjc4LDQwMCIvPgoKICA8IS0tIFZlcnRpY2FsIHZpbmUgbGVmdCAtLT4KICA8cGF0aCBjbGFzcz0idiB2aW5lIiBzdHJva2Utd2lkdGg9IjAuOSIKICAgIGQ9Ik02MCziiJIxMCBDNDUsNDAgNjUsODAgNTAsMTMwIEMzNSwxODAgNTUsMjIwIDQwLDI3MAogICAgICAgQzI1LDMyMCA0NSwzNjAgMzAsNDEwIi8+CiAgPCEtLSBWZXJ0aWNhbCB2aW5lIHJpZ2h0IC0tPgogIDxwYXRoIGNsYXNzPSJ2IHZpbmViIiBzdHJva2Utd2lkdGg9IjAuOCIKICAgIGQ9Ik0zNDAs4oiSMTAgQzM1NSw1MCAzMzUsOTAgMzUwLDE0NSBDMzY1LDIwMCAzNDUsMjQwIDM1OCwyOTUKICAgICAgIEMzNzAsMzQ1IDM1MiwzNzUgMzY1LDQxMCIvPgoKICA8IS0tIExlYXZlcyBjbHVzdGVyIDEgKGFyb3VuZCA4MCw5NSkgLS0+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSI2OCIgY3k9Ijc4IiByeD0iOSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKC0zNSw2OCw3OCkiLz4KICA8ZWxsaXBzZSBjbGFzcz0ibGVhZiIgY3g9IjU4IiBjeT0iNjgiIHJ4PSI4IiByeT0iNCIgdHJhbnNmb3JtPSJyb3RhdGUoLTUwLDU4LDY4KSIvPgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iOTIiIGN5PSI3MiIgcng9IjciIHJ5PSI0IiB0cmFuc2Zvcm09InJvdGF0ZSgyMCw5Miw3MikiLz4KICA8IS0tIHNtYWxsIDUtcG9pbnRlZCBsZWFmIHNoYXBlcyAtLT4KICA8cGF0aCBjbGFzcz0ibGVhZiIgZD0iTTQ1LDQyIEM0MiwzNiAzNiwzMyA0MCwyOCBDNDQsMjMgNTAsMjggNTAsMzUgQzU0LDI4IDYwLDI1IDYwLDMyIEM2MCwzOCA1Miw0MCA0OCw0MloiIG9wYWNpdHk9IjAuNiIvPgoKICA8IS0tIExlYXZlcyBjbHVzdGVyIDIgKGFyb3VuZCAxOTAsMTAyKSAtLT4KICA8ZWxsaXBzZSBjbGFzcz0ibGVhZiIgY3g9IjIwNCIgY3k9Ijg1IiByeD0iOSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKDMwLDIwNCw4NSkiLz4KICA8ZWxsaXBzZSBjbGFzcz0ibGVhZiIgY3g9IjIxOCIgY3k9IjcyIiByeD0iOCIgcnk9IjQiIHRyYW5zZm9ybT0icm90YXRlKDQ1LDIxOCw3MikiLz4KICA8ZWxsaXBzZSBjbGFzcz0ibGVhZiIgY3g9IjIyOCIgY3k9IjU4IiByeD0iNyIgcnk9IjQiIHRyYW5zZm9ybT0icm90YXRlKDU1LDIyOCw1OCkiLz4KICA8cGF0aCBjbGFzcz0ibGVhZiIgZD0iTTI0OCwxNiBDMjQ1LDEwIDI0MCw3IDI0MiwyIEMyNDUsLTIgMjUxLDIgMjUyLDkgQzI1NSwyIDI2MSwtMSAyNjEsNiBDMjYxLDEyIDI1NCwxNSAyNTAsMTZaIiBvcGFjaXR5PSIwLjYiLz4KCiAgPCEtLSBMZWF2ZXMgY2x1c3RlciAzIChhcm91bmQgMzAwLDEwOCkgLS0+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSIyODgiIGN5PSI5MCIgcng9IjkiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgtMjUsMjg4LDkwKSIvPgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iMjc2IiBjeT0iNzYiIHJ4PSI4IiByeT0iNCIgdHJhbnNmb3JtPSJyb3RhdGUoLTQwLDI3Niw3NikiLz4KCiAgPCEtLSBMZWF2ZXMgY2x1c3RlciA0IChib3R0b20gdmluZSkgLS0+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSI5NiIgY3k9IjMwOCIgcng9IjkiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSg0MCw5NiwzMDgpIi8+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSI4MiIgY3k9IjMyNCIgcng9IjgiIHJ5PSI0IiB0cmFuc2Zvcm09InJvdGF0ZSg1NSw4MiwzMjQpIi8+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSI2OCIgY3k9IjM0MiIgcng9IjciIHJ5PSI0IiB0cmFuc2Zvcm09InJvdGF0ZSg2NSw2OCwzNDIpIi8+CiAgPHBhdGggY2xhc3M9ImxlYWYiIGQ9Ik01MiwzOTggQzQ5LDM5MiA0NCwzODkgNDYsMzg0IEM0OSwzODAgNTUsMzg0IDU2LDM5MSBDNTksMzg0IDY1LDM4MSA2NSwzODggQzY1LDM5NCA1NywzOTcgNTQsMzk4WiIgb3BhY2l0eT0iMC42Ii8+CgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iMjQ0IiBjeT0iMzEwIiByeD0iOSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKC00MCwyNDQsMzEwKSIvPgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iMjU4IiBjeT0iMzI2IiByeD0iOCIgcnk9IjQiIHRyYW5zZm9ybT0icm90YXRlKC01NSwyNTgsMzI2KSIvPgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iMjcwIiBjeT0iMzQ0IiByeD0iNyIgcnk9IjQiIHRyYW5zZm9ybT0icm90YXRlKC02NSwyNzAsMzQ0KSIvPgoKICA8IS0tIExlYXZlcyBvbiB2ZXJ0aWNhbCB2aW5lcyAtLT4KICA8ZWxsaXBzZSBjbGFzcz0ibGVhZiIgY3g9IjQ0IiBjeT0iNjAiICByeD0iOCIgcnk9IjQiIHRyYW5zZm9ybT0icm90YXRlKC02MCw0NCw2MCkiLz4KICA8ZWxsaXBzZSBjbGFzcz0ibGVhZiIgY3g9IjUyIiBjeT0iMTYwIiByeD0iOCIgcnk9IjQiIHRyYW5zZm9ybT0icm90YXRlKC00NSw1MiwxNjApIi8+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSI0NCIgY3k9IjI0NSIgcng9IjgiIHJ5PSI0IiB0cmFuc2Zvcm09InJvdGF0ZSgtNjAsNDQsMjQ1KSIvPgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iNTIiIGN5PSIzNDAiIHJ4PSI4IiByeT0iNCIgdHJhbnNmb3JtPSJyb3RhdGUoLTQ1LDUyLDM0MCkiLz4KCiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSIzNTYiIGN5PSI3NSIgIHJ4PSI4IiByeT0iNCIgdHJhbnNmb3JtPSJyb3RhdGUoNTUsMzU2LDc1KSIvPgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iMzQ4IiBjeT0iMTcwIiByeD0iOCIgcnk9IjQiIHRyYW5zZm9ybT0icm90YXRlKDQ1LDM0OCwxNzApIi8+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSIzNTYiIGN5PSIyNjAiIHJ4PSI4IiByeT0iNCIgdHJhbnNmb3JtPSJyb3RhdGUoNjAsMzU2LDI2MCkiLz4KICA8ZWxsaXBzZSBjbGFzcz0ibGVhZiIgY3g9IjM1MCIgY3k9IjM2MCIgcng9IjgiIHJ5PSI0IiB0cmFuc2Zvcm09InJvdGF0ZSg0NSwzNTAsMzYwKSIvPgoKICA8IS0tIHRpbnkgYmVycnkgZG90cyAtLT4KICA8Y2lyY2xlIGZpbGw9InJnYmEoMTMwLDk1LDcwLDAuMDgpIiBjeD0iMTIwIiBjeT0iNzgiIHI9IjMiLz4KICA8Y2lyY2xlIGZpbGw9InJnYmEoMTMwLDk1LDcwLDAuMDcpIiBjeD0iMjQwIiBjeT0iOTQiIHI9IjIuNSIvPgogIDxjaXJjbGUgZmlsbD0icmdiYSgxMzAsOTUsNzAsMC4wNykiIGN4PSIxNTAiIGN5PSIyODIiIHI9IjIuNSIvPgogIDxjaXJjbGUgZmlsbD0icmdiYSgxMzAsOTUsNzAsMC4wNikiIGN4PSIyOTUiIGN5PSIyOTIiIHI9IjMiLz4KPC9zdmc+");
+      --ivy-a: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiB2aWV3Qm94PSIwIDAgNDAwIDQwMCI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC52e2ZpbGw6bm9uZTtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7fQogICAgICAudmluZXtzdHJva2U6cmdiYSgxNDAsMTIwLDYwLDAuMDkpO30KICAgICAgLmxlYWZ7ZmlsbDpyZ2JhKDEzMCwxMTUsNTUsMC4wNyk7c3Ryb2tlOm5vbmU7fQogICAgICAudmluZWJ7c3Ryb2tlOnJnYmEoMTYwLDEzMCw1MCwwLjA2KTt9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0idiB2aW5lIiBzdHJva2Utd2lkdGg9IjEuMiIgZD0iTS0xMCw4MCBDNDAS2NsgODAsMTAwIDEyMCw4MCBDMTYwLDYwIDE5MCwxMTAgMjQwLDk1IEMyOTAsODAgMzMwLDEyMCAzODAsMTAwIi8+CiAgPHBhdGggY2xhc3M9InYgdmluZSIgc3Ryb2tlLXdpZHRoPSIwLjgiIGQ9Ik04MCw5NSBDNzUsNzAgNjAsNTUgNDUsNDAiLz4KICA8cGF0aCBjbGFzcz0idiB2aW5lYiIgc3Ryb2tlLXdpZHRoPSIxLjAiIGQ9Ik0tMTAsMjgwIEM1MCwyNjAgMTAwLDMwMCAxNTAsMjg1IEMyMDAsMjcwIDI0MCwzMTAgMjkwLDI5NSIvPgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iNjgiIGN5PSI3OCIgcng9IjkiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgtMzUsNjgsNzgpIi8+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSI1OCIgY3k9IjY4IiByeD0iOCIgcnk9IjQiIHRyYW5zZm9ybT0icm90YXRlKC01MCw1OCw2OCkiLz4KPC9zdmc+");
+      --ivy-b: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiB2aWV3Qm94PSIwIDAgNDAwIDQwMCI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC52e2ZpbGw6bm9uZTtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7fQogICAgICAudmluZXtzdHJva2U6cmdiYSgxMzAsMTEwLDUwLDAuMTApO30KICAgICAgLmxlYWZ7ZmlsbDpyZ2JhKDEyMCwxMDUsNDUsMC4wOCk7c3Ryb2tlOm5vbmU7fQogICAgICAudmluZWJ7c3Ryb2tlOnJnYmEoMTUwLDEyMCw0MiwwLjA3KTt9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0idiB2aW5lIiBzdHJva2Utd2lkdGg9IjEuMiIgZD0iTS0xMCw4MCBDNDASMS44IDgwLDEwMCAxMjAsODAgQzE2MCw2MCAxOTAsMTEwIDI0MCw5NSIvPgogIDxlbGxpcHNlIGNsYXNzPSJsZWFmIiBjeD0iNjgiIGN5PSI3OCIgcng9IjkiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgtMzUsNjgsNzgpIi8+CiAgPGVsbGlwc2UgY2xhc3M9ImxlYWYiIGN4PSI5NiIgY3k9IjMwOCIgcng9IjkiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSg0MCw5NiwzMDgpIi8+CiAgPGNpcmNsZSBmaWxsPSJyZ2JhKDEzMCw5NSw3MCwwLjA4KSIgY3g9IjEyMCIgY3k9Ijc4IiByPSIzIi8+Cjwvc3ZnPg==");
       --ivy-sz: 400px 400px;
     }
     body {
@@ -376,23 +624,22 @@
       background-repeat: no-repeat, repeat;
     }
     #hero::before { display:none; }
-    #about  { background-color:var(--bg-sec-a); background-image:var(--ivy-a); background-size:var(--ivy-sz); }
-    #fanbox { background-color:var(--bg-sec-a); background-image:var(--ivy-a); background-size:var(--ivy-sz); }
-    #videos { background-color:var(--bg-sec-b); background-image:var(--ivy-b); background-size:var(--ivy-sz); }
-    #links  { background-color:var(--bg-sec-b); background-image:var(--ivy-b); background-size:var(--ivy-sz); }
-    footer  { background-color:var(--bg-sec-b); background-image:var(--ivy-b); background-size:var(--ivy-sz); }
+    #about      { background-color:var(--bg-sec-a); background-image:var(--ivy-a); background-size:var(--ivy-sz); }
+    #fanbox     { background-color:var(--bg-sec-a); background-image:var(--ivy-a); background-size:var(--ivy-sz); }
+    #guidelines { background-color:var(--bg-sec-b); background-image:var(--ivy-b); background-size:var(--ivy-sz); }
+    #videos     { background-color:var(--bg-sec-b); background-image:var(--ivy-b); background-size:var(--ivy-sz); }
+    #links      { background-color:var(--bg-sec-b); background-image:var(--ivy-b); background-size:var(--ivy-sz); }
+    footer      { background-color:var(--bg-sec-b); background-image:var(--ivy-b); background-size:var(--ivy-sz); }
     .about-card,.video-card,.link-card,.fanbox-accordion { background:#fff !important; }
 
     @media(max-width:540px){.nav-links{gap:16px;}.nav-links a{font-size:10px;}}
 
-    /* ══ ROYAL FRAME (shared by all three portraits) ══ */
+    /* ══ ROYAL FRAME ══ */
     .royal-frame-wrap {
       position: relative;
       display: inline-block;
-      /* breathing room so the SVG overlay isn't clipped */
       padding: 28px;
     }
-    /* the actual <img> */
     .royal-frame-wrap img {
       display: block;
       width: 100%;
@@ -401,7 +648,6 @@
       z-index: 1;
       border-radius: 2px;
     }
-    /* SVG frame overlay – absolutely covers the padding area */
     .royal-frame-svg {
       position: absolute;
       inset: 0;
@@ -411,8 +657,6 @@
       z-index: 2;
       overflow: visible;
     }
-
-    /* ── Hero portrait ── */
     .hero-portrait {
       margin: 36px auto 0;
       max-width: min(480px, 90vw);
@@ -420,8 +664,6 @@
     .hero-portrait img {
       box-shadow: 0 8px 40px rgba(184,150,12,0.18);
     }
-
-    /* ── About / Maid portrait ── */
     .about-portrait {
       margin: 0 auto 44px;
       max-width: min(440px, 88vw);
@@ -429,8 +671,6 @@
     .about-portrait img {
       box-shadow: 0 8px 36px rgba(184,150,12,0.15);
     }
-
-    /* ── Three-view section ── */
     #threeview { background: var(--bg-sec-a); }
     .threeview-portrait {
       margin: 0 auto;
@@ -495,43 +735,16 @@
       <rect x="14" y="104" width="132" height="22" rx="3" fill="url(#gMono)" filter="url(#etch)"/>
       <rect x="14" y="104" width="132" height="3"  rx="1.5" fill="url(#gHi)" opacity="0.7"/>
       <rect x="14" y="123" width="132" height="3"  rx="1.5" fill="#7a5800" opacity="0.5"/>
-      <text x="34"  y="119" text-anchor="middle" font-size="11" fill="#8a6400" opacity="0.55" font-family="serif">❧</text>
-      <text x="80"  y="119" text-anchor="middle" font-size="11" fill="#8a6400" opacity="0.55" font-family="serif">❧</text>
-      <text x="126" y="119" text-anchor="middle" font-size="11" fill="#8a6400" opacity="0.55" font-family="serif">❧</text>
       <ellipse cx="80"  cy="115" rx="7"   ry="5.5" fill="url(#gJewel)"   filter="url(#etch)"/>
-      <ellipse cx="78"  cy="113" rx="2.5" ry="1.8" fill="rgba(255,248,200,0.7)"/>
       <circle  cx="53"  cy="115" r="4.2"  fill="url(#gJewelSm)" filter="url(#etch)"/>
-      <circle  cx="52"  cy="114" r="1.4"  fill="rgba(255,248,200,0.6)"/>
       <circle  cx="107" cy="115" r="4.2"  fill="url(#gJewelSm)" filter="url(#etch)"/>
-      <circle  cx="106" cy="114" r="1.4"  fill="rgba(255,248,200,0.6)"/>
-      <circle  cx="31"  cy="115" r="2.5"  fill="url(#gJewelSm)"/>
-      <circle  cx="129" cy="115" r="2.5"  fill="url(#gJewelSm)"/>
       <path d="M14 106 L14 72 L38 88 L56 52 L62 64 L70 38 L80 18 L90 38 L98 64 L104 52 L122 88 L146 72 L146 106 Z" fill="url(#gMono)" filter="url(#etch)"/>
-      <path d="M22 106 L22 76 L40 90 L58 56 L65 68 L72 44 L80 26 L88 44 L95 68 L102 56 L120 90 L138 76 L138 106 Z" fill="none" stroke="#8a6400" stroke-width="1" opacity="0.25"/>
-      <path d="M14 72 L38 88"   stroke="url(#gHi)" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-      <path d="M146 72 L122 88" stroke="url(#gHi)" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-      <path d="M80 18 L70 38 M80 18 L90 38" stroke="#f0dc80" stroke-width="1.2" opacity="0.55"/>
-      <path d="M28 100 Q28 88 36 86 Q44 84 44 76" stroke="#9a7410" stroke-width="0.9" fill="none" opacity="0.5"/>
-      <path d="M52 100 Q52 90 48 84"              stroke="#9a7410" stroke-width="0.9" fill="none" opacity="0.4"/>
-      <path d="M132 100 Q132 88 124 86 Q116 84 116 76" stroke="#9a7410" stroke-width="0.9" fill="none" opacity="0.5"/>
-      <path d="M108 100 Q108 90 112 84"               stroke="#9a7410" stroke-width="0.9" fill="none" opacity="0.4"/>
-      <path d="M66 100 Q66 82 72 72 Q76 64 80 60 Q84 64 88 72 Q94 82 94 100" stroke="#9a7410" stroke-width="0.9" fill="none" opacity="0.4"/>
-      <path d="M38 88 L34 78 L42 80 Z"    fill="#d4af37" opacity="0.9"/>
-      <path d="M56 52 L52 42 L60 46 Z"    fill="#d4af37" opacity="0.85"/>
-      <path d="M122 88 L118 80 L126 78 Z" fill="#d4af37" opacity="0.9"/>
-      <path d="M104 52 L100 46 L108 42 Z" fill="#d4af37" opacity="0.85"/>
-      <path d="M80 18 L74 34 L86 34 Z"    fill="#e8cc60" opacity="0.95"/>
+      <path d="M80 18 L74 34 L86 34 Z" fill="#e8cc60"/>
       <circle cx="80"  cy="18"  r="3.5" fill="url(#gJewel)"/>
-      <circle cx="79"  cy="17"  r="1.2" fill="rgba(255,252,220,0.8)"/>
       <circle cx="38"  cy="88"  r="3.5" fill="url(#gJewelSm)"/>
       <circle cx="56"  cy="52"  r="3.5" fill="url(#gJewelSm)"/>
       <circle cx="122" cy="88"  r="3.5" fill="url(#gJewelSm)"/>
       <circle cx="104" cy="52"  r="3.5" fill="url(#gJewelSm)"/>
-      <path d="M14 106 L146 106" stroke="#f0dc80" stroke-width="0.8" opacity="0.4"/>
-      <text x="6"   y="80" font-size="7" fill="#d4af37" opacity="0.6">✦</text>
-      <text x="150" y="80" font-size="7" fill="#d4af37" opacity="0.6">✦</text>
-      <text x="72"  y="9"  font-size="5" fill="#d4af37" opacity="0.5">✦</text>
-      <text x="84"  y="9"  font-size="5" fill="#d4af37" opacity="0.5">✦</text>
     </svg>
   </div>
   <div class="loading-title">Olibia Royal Chronicle</div>
@@ -548,6 +761,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#threeview">Design</a></li>
     <li><a href="#videos">Works</a></li>
+    <li><a href="#guidelines">Rules</a></li>
     <li><a href="#fanbox">Fanbox</a></li>
     <li><a href="#links">Links</a></li>
   </ul>
@@ -590,12 +804,9 @@
       <div class="hero-ornament-line"></div>
     </div>
     <p class="hero-catchcopy reveal">『 姫と外の世界を見に行かない…？ 』</p>
-
-    <!-- olivia_main: framed portrait below catchcopy -->
     <div class="hero-portrait reveal" style="transition-delay:.18s;">
       <div class="royal-frame-wrap">
         <img src="olivia.main.png" alt="エイル・オリビア メインビジュアル" />
-        <!-- British ornate frame SVG overlay -->
         <svg class="royal-frame-svg" viewBox="0 0 400 520" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="fgMain" x1="0" y1="0" x2="1" y2="1">
@@ -606,81 +817,52 @@
             </linearGradient>
             <filter id="fglow"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
           </defs>
-          <!-- outer rect border -->
-          <rect x="4" y="4" width="392" height="512" rx="4" ry="4"
-                fill="none" stroke="url(#fgMain)" stroke-width="2.5" filter="url(#fglow)"/>
-          <!-- inner rect -->
-          <rect x="14" y="14" width="372" height="492" rx="2" ry="2"
-                fill="none" stroke="url(#fgMain)" stroke-width="1" opacity=".55"/>
-          <!-- fine inner line -->
-          <rect x="20" y="20" width="360" height="480" rx="1" ry="1"
-                fill="none" stroke="#e8cc60" stroke-width=".5" opacity=".35"/>
-
-          <!-- ── CORNER ORNAMENTS (all four) ── -->
-          <!-- top-left -->
+          <rect x="4" y="4" width="392" height="512" rx="4" ry="4" fill="none" stroke="url(#fgMain)" stroke-width="2.5" filter="url(#fglow)"/>
+          <rect x="14" y="14" width="372" height="492" rx="2" ry="2" fill="none" stroke="url(#fgMain)" stroke-width="1" opacity=".55"/>
+          <rect x="20" y="20" width="360" height="480" rx="1" ry="1" fill="none" stroke="#e8cc60" stroke-width=".5" opacity=".35"/>
           <g transform="translate(4,4)" filter="url(#fglow)">
             <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMain)" stroke-width="2.5"/>
             <circle cx="0"  cy="0"  r="5"   fill="url(#fgMain)"/>
             <circle cx="32" cy="0"  r="3.5" fill="url(#fgMain)"/>
             <circle cx="0"  cy="32" r="3.5" fill="url(#fgMain)"/>
             <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
-            <path d="M18 6 Q22 4 26 2" fill="none" stroke="#f0dc80" stroke-width=".8" opacity=".5"/>
-            <path d="M6 18 Q4 22 2 26" fill="none" stroke="#f0dc80" stroke-width=".8" opacity=".5"/>
-            <!-- fleur flourish -->
-            <path d="M0 0 Q8 8 0 16 Q-4 8 0 0Z" transform="translate(2,2) rotate(45)" fill="url(#fgMain)" opacity=".6" transform-origin="0 0"/>
           </g>
-          <!-- top-right -->
           <g transform="translate(396,4) scale(-1,1)" filter="url(#fglow)">
             <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMain)" stroke-width="2.5"/>
             <circle cx="0"  cy="0"  r="5"   fill="url(#fgMain)"/>
             <circle cx="32" cy="0"  r="3.5" fill="url(#fgMain)"/>
             <circle cx="0"  cy="32" r="3.5" fill="url(#fgMain)"/>
-            <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
           </g>
-          <!-- bottom-left -->
           <g transform="translate(4,516) scale(1,-1)" filter="url(#fglow)">
             <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMain)" stroke-width="2.5"/>
             <circle cx="0"  cy="0"  r="5"   fill="url(#fgMain)"/>
             <circle cx="32" cy="0"  r="3.5" fill="url(#fgMain)"/>
             <circle cx="0"  cy="32" r="3.5" fill="url(#fgMain)"/>
-            <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
           </g>
-          <!-- bottom-right -->
           <g transform="translate(396,516) scale(-1,-1)" filter="url(#fglow)">
             <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMain)" stroke-width="2.5"/>
             <circle cx="0"  cy="0"  r="5"   fill="url(#fgMain)"/>
             <circle cx="32" cy="0"  r="3.5" fill="url(#fgMain)"/>
             <circle cx="0"  cy="32" r="3.5" fill="url(#fgMain)"/>
-            <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
           </g>
-
-          <!-- ── MID-EDGE ORNAMENTS ── -->
-          <!-- top centre -->
           <g transform="translate(200,4)" filter="url(#fglow)">
             <circle cx="0" cy="0" r="5" fill="url(#fgMain)"/>
             <path d="M-22 0 Q-12 -10 0 0 Q12 -10 22 0" fill="none" stroke="url(#fgMain)" stroke-width="1.5"/>
-            <path d="M-10 0 Q-5 -5 0 -2 Q5 -5 10 0" fill="none" stroke="#f0dc80" stroke-width=".8" opacity=".6"/>
-            <!-- tiny crown cap -->
             <path d="M-6 -6 L-4 -11 L0 -7 L4 -11 L6 -6 Z" fill="url(#fgMain)" opacity=".85"/>
           </g>
-          <!-- bottom centre -->
           <g transform="translate(200,516) scale(1,-1)" filter="url(#fglow)">
             <circle cx="0" cy="0" r="5" fill="url(#fgMain)"/>
             <path d="M-22 0 Q-12 -10 0 0 Q12 -10 22 0" fill="none" stroke="url(#fgMain)" stroke-width="1.5"/>
             <path d="M-6 -6 L-4 -11 L0 -7 L4 -11 L6 -6 Z" fill="url(#fgMain)" opacity=".85"/>
           </g>
-          <!-- left centre -->
           <g transform="translate(4,260)" filter="url(#fglow)">
             <circle cx="0" cy="0" r="4.5" fill="url(#fgMain)"/>
             <path d="M0 -20 Q-10 -10 0 0 Q-10 10 0 20" fill="none" stroke="url(#fgMain)" stroke-width="1.4"/>
           </g>
-          <!-- right centre -->
           <g transform="translate(396,260)" filter="url(#fglow)">
             <circle cx="0" cy="0" r="4.5" fill="url(#fgMain)"/>
             <path d="M0 -20 Q10 -10 0 0 Q10 10 0 20" fill="none" stroke="url(#fgMain)" stroke-width="1.4"/>
           </g>
-
-          <!-- ── SIDE CABLE / ROPE LINES ── -->
           <path d="M4 56 L4 464" stroke="url(#fgMain)" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
           <path d="M396 56 L396 464" stroke="url(#fgMain)" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
           <path d="M56 4 L344 4" stroke="url(#fgMain)" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
@@ -699,8 +881,6 @@
     <p class="section-eyebrow reveal">✦ &nbsp; Royal Profile</p>
     <h2 class="section-title reveal">About the Princess</h2>
     <div class="section-rule reveal"></div>
-
-    <!-- olivia_maid: framed portrait below heading, above grid -->
     <div class="about-portrait reveal" style="transition-delay:.06s;">
       <div class="royal-frame-wrap">
         <img src="olivia.maid.jpg" alt="エイル・オリビア メイドビジュアル" />
@@ -716,41 +896,30 @@
           </defs>
           <rect x="4"  y="4"  width="392" height="472" rx="4" fill="none" stroke="url(#fgMaid)" stroke-width="2.5" filter="url(#fglowM)"/>
           <rect x="14" y="14" width="372" height="452" rx="2" fill="none" stroke="url(#fgMaid)" stroke-width="1"   opacity=".55"/>
-          <rect x="20" y="20" width="360" height="440" rx="1" fill="none" stroke="#e8cc60"      stroke-width=".5"  opacity=".35"/>
-          <!-- corner top-left -->
           <g transform="translate(4,4)" filter="url(#fglowM)">
             <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMaid)" stroke-width="2.5"/>
             <circle cx="0" cy="0"  r="5"   fill="url(#fgMaid)"/>
             <circle cx="32" cy="0" r="3.5" fill="url(#fgMaid)"/>
             <circle cx="0" cy="32" r="3.5" fill="url(#fgMaid)"/>
-            <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
-            <path d="M-4 -4 L-2 -10 L2 -6 L6 -10 L8 -4 Z" transform="translate(2,2) rotate(45)" fill="url(#fgMaid)" opacity=".7"/>
           </g>
-          <!-- corner top-right -->
           <g transform="translate(396,4) scale(-1,1)" filter="url(#fglowM)">
             <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMaid)" stroke-width="2.5"/>
             <circle cx="0" cy="0"  r="5"   fill="url(#fgMaid)"/>
             <circle cx="32" cy="0" r="3.5" fill="url(#fgMaid)"/>
             <circle cx="0" cy="32" r="3.5" fill="url(#fgMaid)"/>
-            <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
           </g>
-          <!-- corner bottom-left -->
           <g transform="translate(4,476) scale(1,-1)" filter="url(#fglowM)">
             <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMaid)" stroke-width="2.5"/>
             <circle cx="0" cy="0"  r="5"   fill="url(#fgMaid)"/>
             <circle cx="32" cy="0" r="3.5" fill="url(#fgMaid)"/>
             <circle cx="0" cy="32" r="3.5" fill="url(#fgMaid)"/>
-            <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
           </g>
-          <!-- corner bottom-right -->
           <g transform="translate(396,476) scale(-1,-1)" filter="url(#fglowM)">
             <path d="M0 32 Q0 0 32 0" fill="none" stroke="url(#fgMaid)" stroke-width="2.5"/>
             <circle cx="0" cy="0"  r="5"   fill="url(#fgMaid)"/>
             <circle cx="32" cy="0" r="3.5" fill="url(#fgMaid)"/>
             <circle cx="0" cy="32" r="3.5" fill="url(#fgMaid)"/>
-            <path d="M6 18 Q14 6 18 6" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
           </g>
-          <!-- mid-edge ornaments -->
           <g transform="translate(200,4)" filter="url(#fglowM)">
             <circle cx="0" cy="0" r="5" fill="url(#fgMaid)"/>
             <path d="M-22 0 Q-12 -10 0 0 Q12 -10 22 0" fill="none" stroke="url(#fgMaid)" stroke-width="1.5"/>
@@ -761,23 +930,11 @@
             <path d="M-22 0 Q-12 -10 0 0 Q12 -10 22 0" fill="none" stroke="url(#fgMaid)" stroke-width="1.5"/>
             <path d="M-6 -6 L-4 -11 L0 -7 L4 -11 L6 -6 Z" fill="url(#fgMaid)" opacity=".85"/>
           </g>
-          <g transform="translate(4,240)" filter="url(#fglowM)">
-            <circle cx="0" cy="0" r="4.5" fill="url(#fgMaid)"/>
-            <path d="M0 -20 Q-10 -10 0 0 Q-10 10 0 20" fill="none" stroke="url(#fgMaid)" stroke-width="1.4"/>
-          </g>
-          <g transform="translate(396,240)" filter="url(#fglowM)">
-            <circle cx="0" cy="0" r="4.5" fill="url(#fgMaid)"/>
-            <path d="M0 -20 Q10 -10 0 0 Q10 10 0 20" fill="none" stroke="url(#fgMaid)" stroke-width="1.4"/>
-          </g>
-          <!-- dashed rail lines -->
           <path d="M4 56 L4 420"   stroke="url(#fgMaid)" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
           <path d="M396 56 L396 420" stroke="url(#fgMaid)" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
-          <path d="M56 4 L344 4"   stroke="url(#fgMaid)" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
-          <path d="M56 476 L344 476" stroke="url(#fgMaid)" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
         </svg>
       </div>
     </div>
-
     <div class="about-grid">
       <div class="about-card reveal">
         <div class="about-card-icon">👑</div>
@@ -815,13 +972,10 @@
         </div>
       </div>
     </div>
-
-    <!-- SD accent: wink + kirameye, floats below profile cards -->
     <div class="about-sd-row reveal" style="transition-delay:.22s;">
       <img class="sd-char" src="olivia.sd.png"       alt="エイル・オリビア SDキャラ（ウィンク）" />
       <img class="sd-char" src="olivia.sdkirame.png" alt="エイル・オリビア SDキャラ（キラ目）" style="animation-delay:.65s;" />
     </div>
-
     <div class="about-message reveal" style="transition-delay:.1s;">
       <div class="about-message-deco">✦ &nbsp; ✦ &nbsp; ✦</div>
       <p class="about-message-text">
@@ -840,11 +994,9 @@
     <p class="section-eyebrow reveal">✦ &nbsp; Character Design</p>
     <h2 class="section-title reveal">三面図 &amp; キャラクターデザイン</h2>
     <div class="section-rule reveal"></div>
-
     <div class="threeview-portrait reveal" style="transition-delay:.08s;">
       <div class="royal-frame-wrap">
         <img src="olivia.threedemention.jpg" alt="エイル・オリビア キャラクター三面図" />
-        <!-- wide-format ornate frame -->
         <svg class="royal-frame-svg" viewBox="0 0 800 440" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="fg3v" x1="0" y1="0" x2="1" y2="1">
@@ -855,114 +1007,52 @@
             </linearGradient>
             <filter id="fglow3"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
           </defs>
-          <!-- triple border system -->
           <rect x="4"  y="4"  width="792" height="432" rx="4" fill="none" stroke="url(#fg3v)" stroke-width="3"   filter="url(#fglow3)"/>
           <rect x="13" y="13" width="774" height="414" rx="2" fill="none" stroke="url(#fg3v)" stroke-width="1.2" opacity=".6"/>
           <rect x="20" y="20" width="760" height="400" rx="1" fill="none" stroke="#e8cc60"    stroke-width=".6"  opacity=".35"/>
-
-          <!-- ── CORNER ORNAMENTS ── -->
-          <!-- top-left -->
           <g transform="translate(4,4)" filter="url(#fglow3)">
             <path d="M0 38 Q0 0 38 0" fill="none" stroke="url(#fg3v)" stroke-width="3"/>
             <circle cx="0"  cy="0"  r="6"   fill="url(#fg3v)"/>
             <circle cx="38" cy="0"  r="4"   fill="url(#fg3v)"/>
             <circle cx="0"  cy="38" r="4"   fill="url(#fg3v)"/>
-            <!-- inner filigree -->
             <path d="M8 24 Q20 8 24 8"  fill="none" stroke="#f0dc80" stroke-width="1.2" opacity=".7"/>
-            <path d="M24 8 Q32 4 38 2"  fill="none" stroke="#f0dc80" stroke-width=".9"  opacity=".5"/>
-            <path d="M8 24 Q4 32 2 38"  fill="none" stroke="#f0dc80" stroke-width=".9"  opacity=".5"/>
-            <!-- rosette -->
             <circle cx="12" cy="12" r="4"   fill="url(#fg3v)" opacity=".5"/>
             <circle cx="12" cy="12" r="1.8" fill="#fff8d0"    opacity=".8"/>
-            <!-- mini crown -->
-            <path d="M-7 -7 L-5 -13 L0 -9 L5 -13 L7 -7 Z" transform="translate(2,2) rotate(45)" fill="url(#fg3v)" opacity=".8"/>
           </g>
-          <!-- top-right -->
           <g transform="translate(796,4) scale(-1,1)" filter="url(#fglow3)">
             <path d="M0 38 Q0 0 38 0" fill="none" stroke="url(#fg3v)" stroke-width="3"/>
             <circle cx="0"  cy="0"  r="6"   fill="url(#fg3v)"/>
             <circle cx="38" cy="0"  r="4"   fill="url(#fg3v)"/>
             <circle cx="0"  cy="38" r="4"   fill="url(#fg3v)"/>
-            <path d="M8 24 Q20 8 24 8"  fill="none" stroke="#f0dc80" stroke-width="1.2" opacity=".7"/>
             <circle cx="12" cy="12" r="4"   fill="url(#fg3v)" opacity=".5"/>
             <circle cx="12" cy="12" r="1.8" fill="#fff8d0"    opacity=".8"/>
           </g>
-          <!-- bottom-left -->
           <g transform="translate(4,436) scale(1,-1)" filter="url(#fglow3)">
             <path d="M0 38 Q0 0 38 0" fill="none" stroke="url(#fg3v)" stroke-width="3"/>
             <circle cx="0"  cy="0"  r="6"   fill="url(#fg3v)"/>
             <circle cx="38" cy="0"  r="4"   fill="url(#fg3v)"/>
             <circle cx="0"  cy="38" r="4"   fill="url(#fg3v)"/>
-            <path d="M8 24 Q20 8 24 8"  fill="none" stroke="#f0dc80" stroke-width="1.2" opacity=".7"/>
             <circle cx="12" cy="12" r="4"   fill="url(#fg3v)" opacity=".5"/>
             <circle cx="12" cy="12" r="1.8" fill="#fff8d0"    opacity=".8"/>
           </g>
-          <!-- bottom-right -->
           <g transform="translate(796,436) scale(-1,-1)" filter="url(#fglow3)">
             <path d="M0 38 Q0 0 38 0" fill="none" stroke="url(#fg3v)" stroke-width="3"/>
             <circle cx="0"  cy="0"  r="6"   fill="url(#fg3v)"/>
             <circle cx="38" cy="0"  r="4"   fill="url(#fg3v)"/>
             <circle cx="0"  cy="38" r="4"   fill="url(#fg3v)"/>
-            <path d="M8 24 Q20 8 24 8"  fill="none" stroke="#f0dc80" stroke-width="1.2" opacity=".7"/>
             <circle cx="12" cy="12" r="4"   fill="url(#fg3v)" opacity=".5"/>
             <circle cx="12" cy="12" r="1.8" fill="#fff8d0"    opacity=".8"/>
           </g>
-
-          <!-- ── MID-EDGE ORNAMENTS (top / bottom / sides) ── -->
-          <!-- top centre -->
           <g transform="translate(400,4)" filter="url(#fglow3)">
             <circle cx="0" cy="0" r="6"   fill="url(#fg3v)"/>
             <path d="M-32 0 Q-18 -14 0 0 Q18 -14 32 0" fill="none" stroke="url(#fg3v)" stroke-width="2"/>
-            <path d="M-14 0 Q-7 -7 0 -3 Q7 -7 14 0" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".6"/>
             <path d="M-8 -8 L-5 -15 L0 -10 L5 -15 L8 -8 Z" fill="url(#fg3v)" opacity=".9"/>
-            <circle cx="0" cy="-10" r="2.5" fill="#f8f0c0"/>
           </g>
-          <!-- bottom centre -->
           <g transform="translate(400,436) scale(1,-1)" filter="url(#fglow3)">
             <circle cx="0" cy="0" r="6"   fill="url(#fg3v)"/>
             <path d="M-32 0 Q-18 -14 0 0 Q18 -14 32 0" fill="none" stroke="url(#fg3v)" stroke-width="2"/>
             <path d="M-8 -8 L-5 -15 L0 -10 L5 -15 L8 -8 Z" fill="url(#fg3v)" opacity=".9"/>
           </g>
-          <!-- left 1/3 mark -->
-          <g transform="translate(4,148)" filter="url(#fglow3)">
-            <circle cx="0" cy="0" r="5" fill="url(#fg3v)"/>
-            <path d="M0 -24 Q-12 -12 0 0 Q-12 12 0 24" fill="none" stroke="url(#fg3v)" stroke-width="1.6"/>
-          </g>
-          <!-- left 2/3 mark -->
-          <g transform="translate(4,292)" filter="url(#fglow3)">
-            <circle cx="0" cy="0" r="5" fill="url(#fg3v)"/>
-            <path d="M0 -24 Q-12 -12 0 0 Q-12 12 0 24" fill="none" stroke="url(#fg3v)" stroke-width="1.6"/>
-          </g>
-          <!-- right 1/3 mark -->
-          <g transform="translate(796,148)" filter="url(#fglow3)">
-            <circle cx="0" cy="0" r="5" fill="url(#fg3v)"/>
-            <path d="M0 -24 Q12 -12 0 0 Q12 12 0 24" fill="none" stroke="url(#fg3v)" stroke-width="1.6"/>
-          </g>
-          <!-- right 2/3 mark -->
-          <g transform="translate(796,292)" filter="url(#fglow3)">
-            <circle cx="0" cy="0" r="5" fill="url(#fg3v)"/>
-            <path d="M0 -24 Q12 -12 0 0 Q12 12 0 24" fill="none" stroke="url(#fg3v)" stroke-width="1.6"/>
-          </g>
-          <!-- top 1/3 & 2/3 -->
-          <g transform="translate(267,4)" filter="url(#fglow3)">
-            <circle cx="0" cy="0" r="4" fill="url(#fg3v)"/>
-            <path d="M-16 0 Q-8 -8 0 0 Q8 -8 16 0" fill="none" stroke="url(#fg3v)" stroke-width="1.4"/>
-          </g>
-          <g transform="translate(533,4)" filter="url(#fglow3)">
-            <circle cx="0" cy="0" r="4" fill="url(#fg3v)"/>
-            <path d="M-16 0 Q-8 -8 0 0 Q8 -8 16 0" fill="none" stroke="url(#fg3v)" stroke-width="1.4"/>
-          </g>
-          <!-- bottom 1/3 & 2/3 -->
-          <g transform="translate(267,436) scale(1,-1)" filter="url(#fglow3)">
-            <circle cx="0" cy="0" r="4" fill="url(#fg3v)"/>
-            <path d="M-16 0 Q-8 -8 0 0 Q8 -8 16 0" fill="none" stroke="url(#fg3v)" stroke-width="1.4"/>
-          </g>
-          <g transform="translate(533,436) scale(1,-1)" filter="url(#fglow3)">
-            <circle cx="0" cy="0" r="4" fill="url(#fg3v)"/>
-            <path d="M-16 0 Q-8 -8 0 0 Q8 -8 16 0" fill="none" stroke="url(#fg3v)" stroke-width="1.4"/>
-          </g>
-
-          <!-- ── DASHED RAIL LINES ── -->
           <path d="M4 66 L4 370"    stroke="url(#fg3v)" stroke-width="1" stroke-dasharray="4 6" opacity=".35"/>
           <path d="M796 66 L796 370" stroke="url(#fg3v)" stroke-width="1" stroke-dasharray="4 6" opacity=".35"/>
           <path d="M66 4 L730 4"    stroke="url(#fg3v)" stroke-width="1" stroke-dasharray="4 6" opacity=".35"/>
@@ -980,16 +1070,13 @@
 <section id="videos">
   <div class="royal-divider">✦ &nbsp; ✦ &nbsp; ✦</div>
   <div class="section-inner">
-    <!-- SD pair floated top-right above section header -->
     <div class="videos-sd-row reveal">
-      <img class="sd-char" src="olivia.sdkirame.png" alt="エイル・オリビア キラ目SD" style="animation-delay:.3s;" />
-      <img class="sd-char" src="olivia.sd.png"       alt="エイル・オリビア SDキャラ" style="animation-delay:.9s;" />
+      <img class="sd-char" src="eirusama_odoriko_chara.png" alt="エイル・オリビア キラ目SD" style="animation-delay:.3s;" />
+      <img class="sd-char" src="02eirusama_flowerA_chara.png"       alt="エイル・オリビア SDキャラ" style="animation-delay:.9s;" />
     </div>
-
     <p class="section-eyebrow reveal">✦ &nbsp; Royal Stage</p>
     <h2 class="section-title reveal">Works &amp; Singing</h2>
     <div class="section-rule reveal"></div>
-
     <div class="video-grid">
       <div class="video-card reveal">
         <div class="video-label">✦ &nbsp; Introduction</div>
@@ -1023,6 +1110,260 @@
   </div>
 </section>
 
+<!-- ═══ GUIDELINES ═══ -->
+<section id="guidelines">
+  <div class="royal-divider">✦ &nbsp; ✦ &nbsp; ✦</div>
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">✦ &nbsp; Royal Decree</p>
+    <h2 class="section-title reveal">ご利用ガイドライン</h2>
+    <div class="section-rule reveal"></div>
+
+    <!-- 王室額縁グリッド全体ラッパー -->
+    <div class="guideline-frame-outer reveal" style="transition-delay:.06s;">
+
+      <!-- 全体を囲む額縁SVG -->
+      <svg class="guideline-frame-border" viewBox="0 0 1000 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:10;border-radius:20px;">
+        <defs>
+          <linearGradient id="fgGuide" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"   stop-color="#f5e090"/>
+            <stop offset="25%"  stop-color="#d4af37"/>
+            <stop offset="50%"  stop-color="#c8a010"/>
+            <stop offset="75%"  stop-color="#d4af37"/>
+            <stop offset="100%" stop-color="#f0d870"/>
+          </linearGradient>
+          <filter id="fglowG" x="-2%" y="-2%" width="104%" height="104%">
+            <feGaussianBlur stdDeviation="1.8" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- 外枠 -->
+        <rect x="2" y="2" width="996" height="96" rx="18" ry="18"
+              fill="none" stroke="url(#fgGuide)" stroke-width="3" filter="url(#fglowG)"
+              vector-effect="non-scaling-stroke"/>
+        <!-- 内枠 -->
+        <rect x="8" y="8" width="984" height="84" rx="14" ry="14"
+              fill="none" stroke="url(#fgGuide)" stroke-width="1.2" opacity=".55"
+              vector-effect="non-scaling-stroke"/>
+        <!-- 最細ライン -->
+        <rect x="13" y="13" width="974" height="74" rx="10" ry="10"
+              fill="none" stroke="#e8cc60" stroke-width=".6" opacity=".35"
+              vector-effect="non-scaling-stroke"/>
+
+        <!-- 四隅コーナー装飾 -->
+        <!-- top-left -->
+        <g filter="url(#fglowG)">
+          <circle cx="2"  cy="2"  r="5.5" fill="url(#fgGuide)"/>
+          <circle cx="28" cy="2"  r="3.5" fill="url(#fgGuide)"/>
+          <circle cx="2"  cy="28" r="3.5" fill="url(#fgGuide)"/>
+          <path d="M2 30 Q2 2 30 2" fill="none" stroke="url(#fgGuide)" stroke-width="2.5"/>
+          <path d="M8 20 Q16 8 20 8" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
+          <!-- mini crown -->
+          <path d="M-5 -5 L-3 -10 L2 -6 L7 -10 L9 -5 Z" transform="translate(2,2) rotate(45)" fill="url(#fgGuide)" opacity=".8"/>
+        </g>
+        <!-- top-right -->
+        <g transform="translate(1000,0) scale(-1,1)" filter="url(#fglowG)">
+          <circle cx="2"  cy="2"  r="5.5" fill="url(#fgGuide)"/>
+          <circle cx="28" cy="2"  r="3.5" fill="url(#fgGuide)"/>
+          <circle cx="2"  cy="28" r="3.5" fill="url(#fgGuide)"/>
+          <path d="M2 30 Q2 2 30 2" fill="none" stroke="url(#fgGuide)" stroke-width="2.5"/>
+          <path d="M-5 -5 L-3 -10 L2 -6 L7 -10 L9 -5 Z" transform="translate(2,2) rotate(45)" fill="url(#fgGuide)" opacity=".8"/>
+        </g>
+        <!-- bottom-left -->
+        <g transform="translate(0,100) scale(1,-1)" filter="url(#fglowG)">
+          <circle cx="2"  cy="2"  r="5.5" fill="url(#fgGuide)"/>
+          <circle cx="28" cy="2"  r="3.5" fill="url(#fgGuide)"/>
+          <circle cx="2"  cy="28" r="3.5" fill="url(#fgGuide)"/>
+          <path d="M2 30 Q2 2 30 2" fill="none" stroke="url(#fgGuide)" stroke-width="2.5"/>
+        </g>
+        <!-- bottom-right -->
+        <g transform="translate(1000,100) scale(-1,-1)" filter="url(#fglowG)">
+          <circle cx="2"  cy="2"  r="5.5" fill="url(#fgGuide)"/>
+          <circle cx="28" cy="2"  r="3.5" fill="url(#fgGuide)"/>
+          <circle cx="2"  cy="28" r="3.5" fill="url(#fgGuide)"/>
+          <path d="M2 30 Q2 2 30 2" fill="none" stroke="url(#fgGuide)" stroke-width="2.5"/>
+        </g>
+
+        <!-- 上辺中央装飾 -->
+        <g transform="translate(500,2)" filter="url(#fglowG)">
+          <circle cx="0" cy="0" r="5.5" fill="url(#fgGuide)"/>
+          <path d="M-28 0 Q-16 -12 0 0 Q16 -12 28 0" fill="none" stroke="url(#fgGuide)" stroke-width="1.8"/>
+          <path d="M-8 -8 L-5 -14 L0 -9 L5 -14 L8 -8 Z" fill="url(#fgGuide)" opacity=".9"/>
+        </g>
+        <!-- 下辺中央装飾 -->
+        <g transform="translate(500,98) scale(1,-1)" filter="url(#fglowG)">
+          <circle cx="0" cy="0" r="5.5" fill="url(#fgGuide)"/>
+          <path d="M-28 0 Q-16 -12 0 0 Q16 -12 28 0" fill="none" stroke="url(#fgGuide)" stroke-width="1.8"/>
+          <path d="M-8 -8 L-5 -14 L0 -9 L5 -14 L8 -8 Z" fill="url(#fgGuide)" opacity=".9"/>
+        </g>
+        <!-- 左辺中央 -->
+        <g transform="translate(2,50)" filter="url(#fglowG)">
+          <circle cx="0" cy="0" r="4.5" fill="url(#fgGuide)"/>
+          <path d="M0 -20 Q-10 -10 0 0 Q-10 10 0 20" fill="none" stroke="url(#fgGuide)" stroke-width="1.5"/>
+        </g>
+        <!-- 右辺中央 -->
+        <g transform="translate(998,50)" filter="url(#fglowG)">
+          <circle cx="0" cy="0" r="4.5" fill="url(#fgGuide)"/>
+          <path d="M0 -20 Q10 -10 0 0 Q10 10 0 20" fill="none" stroke="url(#fgGuide)" stroke-width="1.5"/>
+        </g>
+
+        <!-- 上辺点線レール -->
+        <path d="M36 2 L470 2"   stroke="url(#fgGuide)" stroke-width="1" stroke-dasharray="3 5" opacity=".4" vector-effect="non-scaling-stroke"/>
+        <path d="M530 2 L964 2"  stroke="url(#fgGuide)" stroke-width="1" stroke-dasharray="3 5" opacity=".4" vector-effect="non-scaling-stroke"/>
+        <!-- 下辺点線レール -->
+        <path d="M36 98 L470 98"  stroke="url(#fgGuide)" stroke-width="1" stroke-dasharray="3 5" opacity=".4" vector-effect="non-scaling-stroke"/>
+        <path d="M530 98 L964 98" stroke="url(#fgGuide)" stroke-width="1" stroke-dasharray="3 5" opacity=".4" vector-effect="non-scaling-stroke"/>
+        <!-- 左辺点線 -->
+        <path d="M2 36 L2 64"   stroke="url(#fgGuide)" stroke-width="1" stroke-dasharray="3 5" opacity=".4" vector-effect="non-scaling-stroke"/>
+        <!-- 右辺点線 -->
+        <path d="M998 36 L998 64" stroke="url(#fgGuide)" stroke-width="1" stroke-dasharray="3 5" opacity=".4" vector-effect="non-scaling-stroke"/>
+      </svg>
+
+      <!-- ガラス質インナー -->
+      <div class="guideline-glass">
+
+        <!-- ヘッダー -->
+        <div class="guideline-header">
+          <div class="guideline-header-crown">👑</div>
+          <div class="guideline-header-eyebrow">✦ &nbsp; Royal Rules &nbsp; ✦</div>
+          <div class="guideline-header-title">ガイドライン / Guidelines</div>
+          <div class="guideline-header-ornament">
+            <div class="guideline-header-ornament-line"></div>
+            <div class="guideline-header-ornament-diamond">✦ ✦ ✦</div>
+            <div class="guideline-header-ornament-line"></div>
+          </div>
+        </div>
+
+        <!-- メイングリッド -->
+        <div class="guideline-grid">
+
+          <!-- 配信ガイドライン -->
+          <div class="guideline-card">
+            <div class="guideline-card-header">
+              <div class="guideline-card-icon">🌹</div>
+              <div class="guideline-card-title">配信上のガイドライン</div>
+            </div>
+            <div class="guideline-card-rule"></div>
+            <ul class="guideline-rules">
+              <li>不適切な表現や誰かが不快に思う言動はおやめ下さい</li>
+              <li>配信と関係ない内容のコメントはしないこと！</li>
+              <li>コメント同士の会話は最低限で！</li>
+              <li>自衛を心掛けるようにお願いいたします🙏<br>
+                <span style="font-size:11px;color:#a89070;">
+                  （苦手なコメントがある場合はブロックなどの対応をご自身でとって下さい🙇‍♀️）
+                </span>
+              </li>
+              <li class="note">度を超えるものやルールに反するものは注意又は相応の対応をいたします</li>
+            </ul>
+          </div>
+
+          <!-- FANBOXSのガイドライン -->
+          <div class="guideline-card">
+            <div class="guideline-card-header">
+              <div class="guideline-card-icon">🌹</div>
+              <div class="guideline-card-title">FANBOXS のガイドライン</div>
+            </div>
+            <div class="guideline-card-rule"></div>
+            <ul class="guideline-rules">
+              <li>上記配信ガイドラインを守れない方、X等でもそのような行動が見受けられる方は支援を受けておられてもサブ垢等のフォローを解除させて頂く可能性がございます</li>
+            </ul>
+          </div>
+
+          <!-- イラストについて -->
+          <div class="guideline-card">
+            <div class="guideline-card-header">
+              <div class="guideline-card-icon">🌹</div>
+              <div class="guideline-card-title">イラストについて</div>
+            </div>
+            <div class="guideline-card-rule"></div>
+            <ul class="guideline-rules">
+              <li>AIイラスト生成は禁止です</li>
+              <li>政治関連・公序良俗に反するイラストや創作は禁止です</li>
+              <li>FAは活動に使用させていただきます<br>
+                <span style="font-size:11px;color:#a89070;">（背景透過 / キャラのみ透過pngがあると助かります🙏）</span>
+              </li>
+              <li>依頼サイトを通してのFAも可能です🙆‍♀️<br>
+                <span style="font-size:11px;color:#a89070;">（活動で使用しても良いか絵師様にご確認よろしくお願いいたします！）</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 切り抜きについて -->
+          <div class="guideline-card">
+            <div class="guideline-card-header">
+              <div class="guideline-card-icon">🌹</div>
+              <div class="guideline-card-title">切り抜きについて</div>
+            </div>
+            <div class="guideline-card-rule"></div>
+            <ul class="guideline-rules">
+              <li>切り抜きなどは大歓迎でございます！<br>
+                <span style="font-size:11px;color:#a89070;">但し、メンバー限定配信の切り抜き公開はおやめ下さいませ</span>
+              </li>
+              <li>歌枠の切り抜きは著作権の問題等ございますのでお控え頂けますと幸いです</li>
+              <li>切り抜きの場合、配信URLの添付をお願いします！</li>
+              <li>悪意にあふれた切り抜き（事実を捻じ曲げるような編集など）は削除要請をさせて頂きます</li>
+            </ul>
+          </div>
+
+          <!-- コラボについて -->
+          <div class="guideline-card" style="grid-column: span 2;">
+            <div class="guideline-card-header">
+              <div class="guideline-card-icon">🌹</div>
+              <div class="guideline-card-title">コラボについて</div>
+            </div>
+            <div class="guideline-card-rule"></div>
+            <ul class="guideline-rules" style="display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;">
+              <li>絡みのある女性配信者様のみコラボ可能です。DM等で声をかけて下さると助かります🥰</li>
+              <li>基本的には男性配信者様とはコラボいたしません<br>
+                <span style="font-size:11px;color:#a89070;">（トラブル対策です。ご理解お願いいたします！）</span>
+              </li>
+            </ul>
+          </div>
+
+        </div><!-- /.guideline-grid -->
+
+        <!-- X(Twitter)規約セクション -->
+        <div class="guideline-x-section">
+          <div class="guideline-x-header">
+            <div class="guideline-x-icon">👑</div>
+            <div class="guideline-x-title">X (Twitter) の規約変更に伴う対応</div>
+          </div>
+          <div class="guideline-x-grid">
+            <!-- リスナー向け -->
+            <div class="guideline-x-card">
+              <div class="guideline-x-card-label">👑 &nbsp; リスナーの皆様へ</div>
+              <ul class="guideline-rules">
+                <li>配信の共有や配信中のスクリーンショットは今まで通り行って頂いて問題ございません！</li>
+                <li>FAに関しましては制作者様のご意向を確認の上、そこに従った方法での公開をお願いいたします！</li>
+                <li>GrokのインプットをオフにしてからのX投稿だと有難いです🙇‍♀️<br>
+                  <span style="font-size:10.5px;color:#a89070;">
+                    設定 ▶ プライバシーと安全 ▶ データ共有とカスタマイズ：Grok ▶ インプットをOFF
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <!-- クリエイター向け -->
+            <div class="guideline-x-card">
+              <div class="guideline-x-card-label">👑 &nbsp; クリエイター様へ</div>
+              <ul class="guideline-rules">
+                <li>制作物の使用制限等がある場合はお手数をお掛けいたしますがご連絡頂けますと幸いです！</li>
+                <li>過去イラストに関しても制作者様のご意向に従い削除またはウォーターマーク等の対応をしてまいりますのでご連絡頂けますと幸いです！</li>
+                <li class="note">今後規約・状況によって変更の可能性があります</li>
+              </ul>
+            </div>
+          </div>
+        </div><!-- /.guideline-x-section -->
+
+        <!-- フッター -->
+        <div class="guideline-footer">
+          ✦ &nbsp; ご協力ありがとうございます &nbsp; — &nbsp; Thank you for your understanding &nbsp; ✦
+        </div>
+
+      </div><!-- /.guideline-glass -->
+    </div><!-- /.guideline-frame-outer -->
+
+  </div>
+</section>
+
 <!-- ═══ FANBOX GUIDE ═══ -->
 <section id="fanbox">
   <div class="royal-divider">✦ &nbsp; ✦ &nbsp; ✦</div>
@@ -1030,9 +1371,7 @@
     <p class="section-eyebrow reveal">✦ &nbsp; Royal Membership</p>
     <h2 class="section-title reveal">FANBOX のご案内</h2>
     <div class="section-rule reveal"></div>
-
     <div class="fanbox-accordion reveal" id="fanboxAccordion">
-      <!-- trigger button -->
       <button class="fanbox-trigger" id="fanboxTrigger" aria-expanded="false" aria-controls="fanboxDrawer">
         <div class="fanbox-trigger-left">
           <div class="fanbox-trigger-icon">💌</div>
@@ -1043,19 +1382,11 @@
         </div>
         <div class="fanbox-chevron" aria-hidden="true">▼</div>
       </button>
-
-      <!-- drawer -->
       <div class="fanbox-drawer" id="fanboxDrawer" role="region" aria-labelledby="fanboxTrigger">
         <div class="fanbox-drawer-inner">
-
-          <!-- FANBOXガイドライン画像 (パス指定) -->
           <div class="fanbox-img-wrap">
-            <img src="olivia.fanboxguideline.png"
-                 alt="エイル・オリビア FANBOXプランガイドライン"
-                 loading="lazy" />
+            <img src="olivia.fanboxguideline.png" alt="エイル・オリビア FANBOXプランガイドライン" loading="lazy" />
           </div>
-
-          <!-- ダイアログ: 画像展開より少し遅れてポップイン -->
           <div class="fanbox-dialog" id="fanboxDialog">
             <div class="fanbox-dialog-crown">✦ &nbsp; ✦ &nbsp; ✦</div>
             <div class="fanbox-dialog-title">✦ &nbsp; FANBOXプランのご紹介</div>
@@ -1085,7 +1416,6 @@
               ✦ &nbsp; FANBOX で応援する &nbsp; ✦
             </a>
           </div>
-
         </div>
       </div>
     </div>
@@ -1174,7 +1504,7 @@
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
     });
-  }, { threshold: 0.08 });
+  }, { threshold: 0.04 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   /* ── HERO reveals after loading ── */
