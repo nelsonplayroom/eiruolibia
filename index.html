@@ -259,77 +259,168 @@
     .video-frame-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
 
     /* ══ GUIDELINES ══ */
-    #guidelines { background: var(--bg-sec-a); }
+    #guidelines { background: var(--bg-sec-b); }
 
-    /* 全体を囲む王室額縁ラッパー */
+    /* ── 額縁ラッパー：CSSボーダーで3重線 ── */
     .guideline-frame-outer {
       position: relative;
-      padding: 3px; /* border gradient のため */
+      /* 三重ボーダー：外→中→内 */
+      border: 3px solid var(--gold-bright);
       border-radius: 20px;
+      padding: 5px; /* 中ボーダー分 */
+      box-shadow:
+        0 0 0 1px rgba(212,175,55,0.55),          /* 中線 */
+        0 0 0 3px rgba(212,175,55,0.18),           /* 最内線 */
+        0 12px 56px rgba(184,150,12,0.20),
+        0 2px 8px rgba(26,18,8,0.06),
+        inset 0 0 0 1px rgba(248,240,192,0.50);    /* インナーグロウ */
+      /* ゴールドのグラデーション光沢ボーダー */
+      background:
+        linear-gradient(var(--bg-sec-b), var(--bg-sec-b)) padding-box,
+        linear-gradient(135deg,
+          #f5e090 0%, #d4af37 20%, #c8a010 40%,
+          #d4af37 60%, #f0d870 80%, #d4af37 100%
+        ) border-box;
     }
 
-    /* 額縁SVGオーバーレイ（外側全体を囲む） */
-    .guideline-frame-border {
+    /* 四隅の装飾コーナー（純CSS疑似要素） */
+    .guideline-frame-outer::before,
+    .guideline-frame-outer::after {
+      content: '';
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      width: 44px;
+      height: 44px;
+      z-index: 20;
       pointer-events: none;
-      z-index: 10;
-      border-radius: 20px;
-      overflow: visible;
+    }
+    /* top-left */
+    .guideline-frame-outer::before {
+      top: -3px; left: -3px;
+      border-top: 3px solid #f5e090;
+      border-left: 3px solid #f5e090;
+      border-radius: 20px 0 0 0;
+      box-shadow: 2px 2px 0 0 rgba(212,175,55,0.5);
+    }
+    /* bottom-right */
+    .guideline-frame-outer::after {
+      bottom: -3px; right: -3px;
+      border-bottom: 3px solid #f5e090;
+      border-right: 3px solid #f5e090;
+      border-radius: 0 0 20px 0;
+      box-shadow: -2px -2px 0 0 rgba(212,175,55,0.5);
     }
 
-    /* ガラス質インナーコンテナ */
+    /* 残り2角はラッパーに追加divで対応 */
+    .guideline-corner-tr,
+    .guideline-corner-bl {
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .guideline-corner-tr {
+      top: -3px; right: -3px;
+      border-top: 3px solid #f5e090;
+      border-right: 3px solid #f5e090;
+      border-radius: 0 20px 0 0;
+      box-shadow: -2px 2px 0 0 rgba(212,175,55,0.5);
+    }
+    .guideline-corner-bl {
+      bottom: -3px; left: -3px;
+      border-bottom: 3px solid #f5e090;
+      border-left: 3px solid #f5e090;
+      border-radius: 0 0 0 20px;
+      box-shadow: 2px -2px 0 0 rgba(212,175,55,0.5);
+    }
+
+    /* 中央ダイヤモンド装飾（上下辺） */
+    .guideline-edge-top,
+    .guideline-edge-bottom {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 21;
+      width: 20px;
+      height: 20px;
+      background: var(--gold-bright);
+      border-radius: 2px;
+      box-shadow: 0 0 8px rgba(212,175,55,0.7);
+    }
+    .guideline-edge-top    { top: -10px;    rotate: 45deg; }
+    .guideline-edge-bottom { bottom: -10px; rotate: 45deg; }
+    .guideline-edge-top::after,
+    .guideline-edge-bottom::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      background: #fff8d0;
+      border-radius: 1px;
+    }
+
+    /* 左右辺ダイヤモンド */
+    .guideline-edge-left,
+    .guideline-edge-right {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 21;
+      width: 16px;
+      height: 16px;
+      background: var(--gold-bright);
+      border-radius: 2px;
+      rotate: 45deg;
+      box-shadow: 0 0 6px rgba(212,175,55,0.6);
+    }
+    .guideline-edge-left  { left: -8px; }
+    .guideline-edge-right { right: -8px; }
+
+    /* ── ガラス質インナー ── */
     .guideline-glass {
       position: relative;
       z-index: 1;
-      border-radius: 18px;
+      border-radius: 15px;
       overflow: hidden;
-      /* ガラス質感 */
       background:
         linear-gradient(
-          135deg,
-          rgba(255,252,240,0.82) 0%,
-          rgba(255,255,255,0.70) 30%,
-          rgba(250,246,234,0.78) 60%,
-          rgba(255,252,240,0.85) 100%
+          160deg,
+          rgba(255,253,242,0.96) 0%,
+          rgba(255,255,255,0.88) 40%,
+          rgba(252,248,236,0.94) 100%
         );
-      backdrop-filter: blur(18px) saturate(1.5) brightness(1.04);
-      -webkit-backdrop-filter: blur(18px) saturate(1.5) brightness(1.04);
+      backdrop-filter: blur(12px) saturate(1.4);
+      -webkit-backdrop-filter: blur(12px) saturate(1.4);
       box-shadow:
-        0 8px 48px rgba(184,150,12,0.16),
-        0 2px 12px rgba(26,18,8,0.07),
-        inset 0 1px 0 rgba(255,248,200,0.60),
-        inset 0 -1px 0 rgba(184,150,12,0.12);
+        inset 0 1px 0 rgba(255,248,200,0.70),
+        inset 0 -1px 0 rgba(184,150,12,0.10);
     }
 
-    /* ガラス内の光沢ハイライト */
+    /* 上部グロウハイライト */
     .guideline-glass::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 50%;
-      background: linear-gradient(180deg, rgba(255,252,220,0.28) 0%, transparent 100%);
-      border-radius: 18px 18px 0 0;
+      height: 60px;
+      background: linear-gradient(180deg, rgba(255,252,210,0.32) 0%, transparent 100%);
+      border-radius: 15px 15px 0 0;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* ヘッダー帯 */
+    /* ── ヘッダー帯 ── */
     .guideline-header {
       position: relative;
       z-index: 1;
       text-align: center;
-      padding: 36px 32px 28px;
-      border-bottom: 1px solid rgba(184,150,12,0.20);
-      background: linear-gradient(180deg, rgba(255,250,225,0.55) 0%, rgba(255,255,255,0.10) 100%);
+      padding: clamp(24px, 5vw, 40px) clamp(16px, 5vw, 32px) clamp(20px, 4vw, 28px);
+      border-bottom: 1px solid rgba(184,150,12,0.18);
+      background: linear-gradient(180deg, rgba(255,252,220,0.50) 0%, transparent 100%);
     }
     .guideline-header-crown {
-      font-size: 28px;
+      font-size: 30px;
       line-height: 1;
       margin-bottom: 10px;
-      filter: drop-shadow(0 2px 8px rgba(184,150,12,0.45));
+      filter: drop-shadow(0 2px 8px rgba(184,150,12,0.50));
     }
     .guideline-header-eyebrow {
       font-family: 'Cinzel', serif;
@@ -341,65 +432,85 @@
     }
     .guideline-header-title {
       font-family: 'Cinzel Decorative', serif;
-      font-size: clamp(16px, 3vw, 26px);
-      letter-spacing: .1em;
+      font-size: clamp(15px, 4vw, 24px);
+      letter-spacing: .08em;
       color: var(--text-dark);
       margin-bottom: 10px;
+      line-height: 1.3;
     }
     .guideline-header-ornament {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
-      margin-top: 6px;
+      margin-top: 8px;
     }
     .guideline-header-ornament-line {
       flex: 1;
-      max-width: 100px;
+      max-width: 80px;
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--gold-bright), transparent);
     }
     .guideline-header-ornament-diamond {
       font-size: 10px;
       color: var(--gold);
-      letter-spacing: 5px;
+      letter-spacing: 4px;
     }
 
-    /* グリッドコンテナ */
+    /* ── メイングリッド ── */
     .guideline-grid {
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      /* スマホ: 1列 / 600px以上: 2列 */
+      grid-template-columns: 1fr;
       gap: 0;
+    }
+    @media (min-width: 600px) {
+      .guideline-grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     /* 各カテゴリカード */
     .guideline-card {
-      padding: 28px 28px 26px;
-      border-right: 1px solid rgba(184,150,12,0.14);
-      border-bottom: 1px solid rgba(184,150,12,0.14);
+      padding: clamp(18px, 4vw, 28px) clamp(16px, 4vw, 28px) clamp(18px, 4vw, 26px);
+      border-bottom: 1px solid rgba(184,150,12,0.13);
       position: relative;
       transition: background .3s ease;
     }
+    /* 2列時だけ奇数カードに右ボーダー */
+    @media (min-width: 600px) {
+      .guideline-card:nth-child(odd) {
+        border-right: 1px solid rgba(184,150,12,0.13);
+      }
+    }
     .guideline-card:hover {
-      background: rgba(255,250,225,0.35);
+      background: rgba(255,251,228,0.45);
     }
-    /* 右端・下端のボーダー除去 */
-    .guideline-card:nth-child(2n) { border-right: none; }
-    @media (max-width: 620px) {
-      .guideline-card { border-right: none; }
-    }
-    /* 最後の行はborder-bottom除去 */
-    .guideline-card:nth-last-child(-n+2):not(:nth-child(odd):last-child) { border-bottom: none; }
-    .guideline-card:last-child { border-bottom: none; border-right: none; }
 
-    /* カテゴリタイトル */
+    /* コラボカード（最後）は下ボーダーなし */
+    .guideline-card:last-child {
+      border-bottom: none;
+    }
+    /* 2列時: 最後2枚は下ボーダーなし */
+    @media (min-width: 600px) {
+      .guideline-card:nth-last-child(-n+2) {
+        border-bottom: none;
+      }
+    }
+
+    /* コラボカードは全幅 */
+    .guideline-card--full {
+      grid-column: 1 / -1;
+    }
+
+    /* カテゴリヘッダー */
     .guideline-card-header {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .guideline-card-icon {
       font-size: 20px;
@@ -408,16 +519,16 @@
     }
     .guideline-card-title {
       font-family: 'Cinzel Decorative', serif;
-      font-size: clamp(10px, 1.4vw, 13px);
+      font-size: clamp(11px, 2.5vw, 13px);
       color: var(--text-dark);
-      letter-spacing: .08em;
+      letter-spacing: .06em;
       line-height: 1.4;
     }
     .guideline-card-rule {
       width: 100%;
       height: 1px;
-      background: linear-gradient(90deg, var(--gold-bright), rgba(212,175,55,0.2));
-      margin-bottom: 16px;
+      background: linear-gradient(90deg, var(--gold-bright), rgba(212,175,55,0.15));
+      margin-bottom: 14px;
     }
 
     /* ルールリスト */
@@ -425,98 +536,119 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 9px;
+      gap: 10px;
     }
     .guideline-rules li {
       font-family: 'Noto Sans JP', sans-serif;
-      font-size: clamp(11px, 1.2vw, 12.5px);
+      font-size: clamp(12px, 2.8vw, 13px);
       color: var(--text-mid);
-      line-height: 1.75;
-      padding-left: 16px;
+      line-height: 1.8;
+      padding-left: 18px;
       position: relative;
+      word-break: break-all;
+      overflow-wrap: break-word;
     }
     .guideline-rules li::before {
       content: '★';
       position: absolute;
       left: 0;
-      top: 2px;
+      top: 3px;
       font-size: 8px;
       color: var(--gold);
       line-height: 1.9;
     }
+    .guideline-rules li .sub-note {
+      display: block;
+      font-size: clamp(10.5px, 2.4vw, 11.5px);
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-top: 3px;
+    }
     .guideline-rules li.note {
-      font-size: clamp(10px, 1.1vw, 11.5px);
+      font-size: clamp(10.5px, 2.4vw, 11.5px);
       color: var(--text-muted);
       font-style: italic;
-      padding-left: 16px;
     }
     .guideline-rules li.note::before {
       content: '※';
       color: var(--rose-light);
     }
 
-    /* フッター帯 */
-    .guideline-footer {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 20px 32px 26px;
-      border-top: 1px solid rgba(184,150,12,0.18);
-      background: linear-gradient(0deg, rgba(255,250,225,0.45) 0%, rgba(255,255,255,0.05) 100%);
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(11px, 1.3vw, 13px);
-      color: var(--text-muted);
-      letter-spacing: .16em;
+    /* コラボカード内の2列リスト（600px以上のみ） */
+    .guideline-rules--collab {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    @media (min-width: 600px) {
+      .guideline-rules--collab {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 28px;
+      }
     }
 
-    /* X / Twitter セクション */
+    /* ── X / Twitter セクション ── */
     .guideline-x-section {
       position: relative;
       z-index: 1;
-      border-top: 1px solid rgba(184,150,12,0.20);
-      background: linear-gradient(135deg, rgba(255,252,235,0.50) 0%, rgba(255,255,255,0.30) 100%);
-      padding: 28px 28px 26px;
+      border-top: 1px solid rgba(184,150,12,0.18);
+      background: linear-gradient(135deg, rgba(255,252,230,0.55) 0%, rgba(255,255,255,0.25) 100%);
+      padding: clamp(20px, 4vw, 28px) clamp(16px, 4vw, 28px);
     }
     .guideline-x-header {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
-    .guideline-x-icon {
-      font-size: 22px;
-      line-height: 1;
-    }
+    .guideline-x-icon { font-size: 22px; line-height: 1; }
     .guideline-x-title {
       font-family: 'Cinzel Decorative', serif;
-      font-size: clamp(10px, 1.4vw, 13px);
+      font-size: clamp(11px, 2.5vw, 13px);
       color: var(--text-dark);
-      letter-spacing: .08em;
+      letter-spacing: .06em;
+      line-height: 1.4;
     }
     .guideline-x-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      grid-template-columns: 1fr;
+      gap: 14px;
     }
-    @media (max-width: 560px) {
-      .guideline-x-grid { grid-template-columns: 1fr; }
+    @media (min-width: 600px) {
+      .guideline-x-grid { grid-template-columns: 1fr 1fr; }
     }
     .guideline-x-card {
-      background: rgba(255,252,240,0.65);
-      border: 1px solid rgba(184,150,12,0.18);
+      background: rgba(255,252,238,0.80);
+      border: 1px solid rgba(184,150,12,0.20);
       border-radius: 12px;
-      padding: 16px 18px;
+      padding: clamp(14px, 3vw, 18px) clamp(14px, 3vw, 18px);
     }
     .guideline-x-card-label {
       font-family: 'Cinzel', serif;
-      font-size: 9px;
-      letter-spacing: .32em;
+      font-size: 9.5px;
+      letter-spacing: .28em;
       color: var(--gold);
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       padding-bottom: 8px;
       border-bottom: 1px solid rgba(184,150,12,0.15);
+    }
+
+    /* ── フッター帯 ── */
+    .guideline-footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: clamp(16px, 3vw, 22px) clamp(16px, 5vw, 32px) clamp(18px, 3vw, 26px);
+      border-top: 1px solid rgba(184,150,12,0.16);
+      background: linear-gradient(0deg, rgba(255,251,225,0.50) 0%, transparent 100%);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(11px, 2.5vw, 13px);
+      color: var(--text-muted);
+      letter-spacing: .14em;
+      word-break: break-all;
     }
 
     /* ══ FANBOX ACCORDION ══ */
@@ -1071,8 +1203,8 @@
   <div class="royal-divider">✦ &nbsp; ✦ &nbsp; ✦</div>
   <div class="section-inner">
     <div class="videos-sd-row reveal">
-      <img class="sd-char" src="eirusama_odoriko_chara.png" alt="エイル・オリビア キラ目SD" style="animation-delay:.3s;" />
-      <img class="sd-char" src="02eirusama_flowerA_chara.png"       alt="エイル・オリビア SDキャラ" style="animation-delay:.9s;" />
+      <img class="sd-char" src="02eirusama_flowerA_chara.png" alt="エイル・オリビア キラ目SD" style="animation-delay:.3s;" />
+      <img class="sd-char" src="eirusama_odoriko_chara.png"       alt="エイル・オリビア SDキャラ" style="animation-delay:.9s;" />
     </div>
     <p class="section-eyebrow reveal">✦ &nbsp; Royal Stage</p>
     <h2 class="section-title reveal">Works &amp; Singing</h2>
@@ -1118,105 +1250,17 @@
     <h2 class="section-title reveal">ご利用ガイドライン</h2>
     <div class="section-rule reveal"></div>
 
-    <!-- 王室額縁グリッド全体ラッパー -->
+    <!-- 全体を囲む王室額縁 -->
     <div class="guideline-frame-outer reveal" style="transition-delay:.06s;">
-
-      <!-- 全体を囲む額縁SVG -->
-      <svg class="guideline-frame-border" viewBox="0 0 1000 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:10;border-radius:20px;">
-        <defs>
-          <linearGradient id="fgGuide" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%"   stop-color="#f5e090"/>
-            <stop offset="25%"  stop-color="#d4af37"/>
-            <stop offset="50%"  stop-color="#c8a010"/>
-            <stop offset="75%"  stop-color="#d4af37"/>
-            <stop offset="100%" stop-color="#f0d870"/>
-          </linearGradient>
-          <filter id="fglowG" x="-2%" y="-2%" width="104%" height="104%">
-            <feGaussianBlur stdDeviation="1.8" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-        <!-- 外枠 -->
-        <rect x="2" y="2" width="996" height="96" rx="18" ry="18"
-              fill="none" stroke="url(#fgGuide)" stroke-width="3" filter="url(#fglowG)"
-              vector-effect="non-scaling-stroke"/>
-        <!-- 内枠 -->
-        <rect x="8" y="8" width="984" height="84" rx="14" ry="14"
-              fill="none" stroke="url(#fgGuide)" stroke-width="1.2" opacity=".55"
-              vector-effect="non-scaling-stroke"/>
-        <!-- 最細ライン -->
-        <rect x="13" y="13" width="974" height="74" rx="10" ry="10"
-              fill="none" stroke="#e8cc60" stroke-width=".6" opacity=".35"
-              vector-effect="non-scaling-stroke"/>
-
-        <!-- 四隅コーナー装飾 -->
-        <!-- top-left -->
-        <g filter="url(#fglowG)">
-          <circle cx="2"  cy="2"  r="5.5" fill="url(#fgGuide)"/>
-          <circle cx="28" cy="2"  r="3.5" fill="url(#fgGuide)"/>
-          <circle cx="2"  cy="28" r="3.5" fill="url(#fgGuide)"/>
-          <path d="M2 30 Q2 2 30 2" fill="none" stroke="url(#fgGuide)" stroke-width="2.5"/>
-          <path d="M8 20 Q16 8 20 8" fill="none" stroke="#f0dc80" stroke-width="1" opacity=".7"/>
-          <!-- mini crown -->
-          <path d="M-5 -5 L-3 -10 L2 -6 L7 -10 L9 -5 Z" transform="translate(2,2) rotate(45)" fill="url(#fgGuide)" opacity=".8"/>
-        </g>
-        <!-- top-right -->
-        <g transform="translate(1000,0) scale(-1,1)" filter="url(#fglowG)">
-          <circle cx="2"  cy="2"  r="5.5" fill="url(#fgGuide)"/>
-          <circle cx="28" cy="2"  r="3.5" fill="url(#fgGuide)"/>
-          <circle cx="2"  cy="28" r="3.5" fill="url(#fgGuide)"/>
-          <path d="M2 30 Q2 2 30 2" fill="none" stroke="url(#fgGuide)" stroke-width="2.5"/>
-          <path d="M-5 -5 L-3 -10 L2 -6 L7 -10 L9 -5 Z" transform="translate(2,2) rotate(45)" fill="url(#fgGuide)" opacity=".8"/>
-        </g>
-        <!-- bottom-left -->
-        <g transform="translate(0,100) scale(1,-1)" filter="url(#fglowG)">
-          <circle cx="2"  cy="2"  r="5.5" fill="url(#fgGuide)"/>
-          <circle cx="28" cy="2"  r="3.5" fill="url(#fgGuide)"/>
-          <circle cx="2"  cy="28" r="3.5" fill="url(#fgGuide)"/>
-          <path d="M2 30 Q2 2 30 2" fill="none" stroke="url(#fgGuide)" stroke-width="2.5"/>
-        </g>
-        <!-- bottom-right -->
-        <g transform="translate(1000,100) scale(-1,-1)" filter="url(#fglowG)">
-          <circle cx="2"  cy="2"  r="5.5" fill="url(#fgGuide)"/>
-          <circle cx="28" cy="2"  r="3.5" fill="url(#fgGuide)"/>
-          <circle cx="2"  cy="28" r="3.5" fill="url(#fgGuide)"/>
-          <path d="M2 30 Q2 2 30 2" fill="none" stroke="url(#fgGuide)" stroke-width="2.5"/>
-        </g>
-
-        <!-- 上辺中央装飾 -->
-        <g transform="translate(500,2)" filter="url(#fglowG)">
-          <circle cx="0" cy="0" r="5.5" fill="url(#fgGuide)"/>
-          <path d="M-28 0 Q-16 -12 0 0 Q16 -12 28 0" fill="none" stroke="url(#fgGuide)" stroke-width="1.8"/>
-          <path d="M-8 -8 L-5 -14 L0 -9 L5 -14 L8 -8 Z" fill="url(#fgGuide)" opacity=".9"/>
-        </g>
-        <!-- 下辺中央装飾 -->
-        <g transform="translate(500,98) scale(1,-1)" filter="url(#fglowG)">
-          <circle cx="0" cy="0" r="5.5" fill="url(#fgGuide)"/>
-          <path d="M-28 0 Q-16 -12 0 0 Q16 -12 28 0" fill="none" stroke="url(#fgGuide)" stroke-width="1.8"/>
-          <path d="M-8 -8 L-5 -14 L0 -9 L5 -14 L8 -8 Z" fill="url(#fgGuide)" opacity=".9"/>
-        </g>
-        <!-- 左辺中央 -->
-        <g transform="translate(2,50)" filter="url(#fglowG)">
-          <circle cx="0" cy="0" r="4.5" fill="url(#fgGuide)"/>
-          <path d="M0 -20 Q-10 -10 0 0 Q-10 10 0 20" fill="none" stroke="url(#fgGuide)" stroke-width="1.5"/>
-        </g>
-        <!-- 右辺中央 -->
-        <g transform="translate(998,50)" filter="url(#fglowG)">
-          <circle cx="0" cy="0" r="4.5" fill="url(#fgGuide)"/>
-          <path d="M0 -20 Q10 -10 0 0 Q10 10 0 20" fill="none" stroke="url(#fgGuide)" stroke-width="1.5"/>
-        </g>
-
-        <!-- 上辺点線レール -->
-        <path d="M36 2 L470 2"   stroke="url(#fgGuide)" stroke-width="1" stroke-dasharray="3 5" opacity=".4" vector-effect="non-scaling-stroke"/>
-        <path d="M530 2 L964 2"  stroke="url(#fgGuide)" stroke-width="1" stroke-dasharray="3 5" opacity=".4" vector-effect="non-scaling-stroke"/>
-        <!-- 下辺点線レール -->
-        <path d="M36 98 L470 98"  stroke="url(#fgGuide)" stroke-width="1" stroke-dasharray="3 5" opacity=".4" vector-effect="non-scaling-stroke"/>
-        <path d="M530 98 L964 98" stroke="url(#fgGuide)" stroke-width="1" stroke-dasharray="3 5" opacity=".4" vector-effect="non-scaling-stroke"/>
-        <!-- 左辺点線 -->
-        <path d="M2 36 L2 64"   stroke="url(#fgGuide)" stroke-width="1" stroke-dasharray="3 5" opacity=".4" vector-effect="non-scaling-stroke"/>
-        <!-- 右辺点線 -->
-        <path d="M998 36 L998 64" stroke="url(#fgGuide)" stroke-width="1" stroke-dasharray="3 5" opacity=".4" vector-effect="non-scaling-stroke"/>
-      </svg>
+      <!-- 四隅コーナー装飾 -->
+      <div class="guideline-corner-tr"></div>
+      <div class="guideline-corner-bl"></div>
+      <!-- 上下辺中央ダイヤモンド -->
+      <div class="guideline-edge-top"></div>
+      <div class="guideline-edge-bottom"></div>
+      <!-- 左右辺中央ダイヤモンド -->
+      <div class="guideline-edge-left"></div>
+      <div class="guideline-edge-right"></div>
 
       <!-- ガラス質インナー -->
       <div class="guideline-glass">
@@ -1233,7 +1277,7 @@
           </div>
         </div>
 
-        <!-- メイングリッド -->
+        <!-- メイングリッド（スマホ1列 / PC2列） -->
         <div class="guideline-grid">
 
           <!-- 配信ガイドライン -->
@@ -1247,10 +1291,8 @@
               <li>不適切な表現や誰かが不快に思う言動はおやめ下さい</li>
               <li>配信と関係ない内容のコメントはしないこと！</li>
               <li>コメント同士の会話は最低限で！</li>
-              <li>自衛を心掛けるようにお願いいたします🙏<br>
-                <span style="font-size:11px;color:#a89070;">
-                  （苦手なコメントがある場合はブロックなどの対応をご自身でとって下さい🙇‍♀️）
-                </span>
+              <li>自衛を心掛けるようにお願いいたします🙏
+                <span class="sub-note">（苦手なコメントがある場合はブロックなどの対応をご自身でとって下さい🙇‍♀️）</span>
               </li>
               <li class="note">度を超えるものやルールに反するものは注意又は相応の対応をいたします</li>
             </ul>
@@ -1278,11 +1320,11 @@
             <ul class="guideline-rules">
               <li>AIイラスト生成は禁止です</li>
               <li>政治関連・公序良俗に反するイラストや創作は禁止です</li>
-              <li>FAは活動に使用させていただきます<br>
-                <span style="font-size:11px;color:#a89070;">（背景透過 / キャラのみ透過pngがあると助かります🙏）</span>
+              <li>FAは活動に使用させていただきます
+                <span class="sub-note">（背景透過 / キャラのみ透過pngがあると助かります🙏）</span>
               </li>
-              <li>依頼サイトを通してのFAも可能です🙆‍♀️<br>
-                <span style="font-size:11px;color:#a89070;">（活動で使用しても良いか絵師様にご確認よろしくお願いいたします！）</span>
+              <li>依頼サイトを通してのFAも可能です🙆‍♀️
+                <span class="sub-note">（活動で使用しても良いか絵師様にご確認よろしくお願いいたします！）</span>
               </li>
             </ul>
           </div>
@@ -1295,8 +1337,8 @@
             </div>
             <div class="guideline-card-rule"></div>
             <ul class="guideline-rules">
-              <li>切り抜きなどは大歓迎でございます！<br>
-                <span style="font-size:11px;color:#a89070;">但し、メンバー限定配信の切り抜き公開はおやめ下さいませ</span>
+              <li>切り抜きなどは大歓迎でございます！
+                <span class="sub-note">但し、メンバー限定配信の切り抜き公開はおやめ下さいませ</span>
               </li>
               <li>歌枠の切り抜きは著作権の問題等ございますのでお控え頂けますと幸いです</li>
               <li>切り抜きの場合、配信URLの添付をお願いします！</li>
@@ -1304,17 +1346,17 @@
             </ul>
           </div>
 
-          <!-- コラボについて -->
-          <div class="guideline-card" style="grid-column: span 2;">
+          <!-- コラボについて（全幅） -->
+          <div class="guideline-card guideline-card--full">
             <div class="guideline-card-header">
               <div class="guideline-card-icon">🌹</div>
               <div class="guideline-card-title">コラボについて</div>
             </div>
             <div class="guideline-card-rule"></div>
-            <ul class="guideline-rules" style="display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;">
+            <ul class="guideline-rules guideline-rules--collab">
               <li>絡みのある女性配信者様のみコラボ可能です。DM等で声をかけて下さると助かります🥰</li>
-              <li>基本的には男性配信者様とはコラボいたしません<br>
-                <span style="font-size:11px;color:#a89070;">（トラブル対策です。ご理解お願いいたします！）</span>
+              <li>基本的には男性配信者様とはコラボいたしません
+                <span class="sub-note">（トラブル対策です。ご理解お願いいたします！）</span>
               </li>
             </ul>
           </div>
@@ -1334,10 +1376,8 @@
               <ul class="guideline-rules">
                 <li>配信の共有や配信中のスクリーンショットは今まで通り行って頂いて問題ございません！</li>
                 <li>FAに関しましては制作者様のご意向を確認の上、そこに従った方法での公開をお願いいたします！</li>
-                <li>GrokのインプットをオフにしてからのX投稿だと有難いです🙇‍♀️<br>
-                  <span style="font-size:10.5px;color:#a89070;">
-                    設定 ▶ プライバシーと安全 ▶ データ共有とカスタマイズ：Grok ▶ インプットをOFF
-                  </span>
+                <li>GrokのインプットをオフにしてからのX投稿だと有難いです🙇‍♀️
+                  <span class="sub-note">設定 ▶ プライバシーと安全 ▶ データ共有とカスタマイズ：Grok ▶ インプットをOFF</span>
                 </li>
               </ul>
             </div>
